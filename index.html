@@ -2,535 +2,814 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Objective Voice Toolkit — Page 1: Defensible Claims</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Objective Voice Toolkit: Defensible Claims</title>
   <style>
     :root{
-      --bg:#f7f7fb;
-      --card:#ffffff;
-      --ink:#111827;
-      --muted:#4b5563;
-      --border:#e5e7eb;
-      --accent:#1f2937;
-      --warn:#fff7ed;
-      --warnBorder:#fed7aa;
-      --hi:#fff3a3;
-      --hiBorder:#f6d365;
-      --ok:#ecfdf5;
-      --okBorder:#a7f3d0;
+      --paper:#f6efe3;
+      --paper-2:#fbf7ef;
+      --ink:#241f26;
+      --muted:#665f63;
+      --line:#ded0bd;
+      --card:#fffaf2;
+      --plum:#3b2438;
+      --plum-2:#4a2e45;
+      --clay:#a55337;
+      --clay-dark:#7d3d2a;
+      --sage:#9faf91;
+      --sage-soft:#e6ebdf;
+      --gold:#d7aa55;
+      --gold-soft:#f5e7c7;
+      --rose-soft:#f8ded6;
+      --red:#9d2c1f;
+      --shadow:0 18px 45px rgba(62, 39, 35, .13);
+      --shadow-soft:0 8px 24px rgba(62, 39, 35, .09);
+      --radius:24px;
+      --radius-sm:16px;
+      --focus:#7f5aa2;
     }
+
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
-      background:var(--bg);
-      line-height:1.45;
+      background:
+        radial-gradient(circle at top left, rgba(215,170,85,.20), transparent 28rem),
+        radial-gradient(circle at 85% 12%, rgba(159,175,145,.25), transparent 24rem),
+        linear-gradient(180deg, #f9f1e5 0%, var(--paper) 45%, #f4eadb 100%);
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:18px;
+      line-height:1.58;
     }
-    header{
-      padding:26px 18px 14px;
-      max-width:980px;
+
+    a{color:var(--clay-dark)}
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+      outline:4px solid rgba(127,90,162,.35);
+      outline-offset:3px;
+    }
+
+    .skip-link{
+      position:absolute;
+      top:-100px;
+      left:18px;
+      background:var(--plum);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:12px;
+      z-index:50;
+    }
+    .skip-link:focus{top:18px}
+
+    .page-shell{
+      width:min(1180px, calc(100% - 32px));
       margin:0 auto;
+      padding:28px 0 64px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:32px;
+      padding:40px;
+      background:
+        linear-gradient(135deg, rgba(59,36,56,.96), rgba(74,46,69,.92)),
+        linear-gradient(135deg, var(--plum), var(--clay-dark));
+      color:#fffaf2;
+      box-shadow:var(--shadow);
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      top:-80px;
+      width:280px;
+      height:280px;
+      border-radius:999px;
+      background:rgba(215,170,85,.20);
+      border:1px solid rgba(255,255,255,.16);
+    }
+    .eyebrow{
+      position:relative;
+      z-index:1;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      margin:0 0 18px;
+      padding:7px 12px;
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      color:#f5e7c7;
+      font-size:.78rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+    h1, h2, h3{
+      font-family:Georgia, 'Times New Roman', serif;
+      line-height:1.08;
+      font-weight:500;
     }
     h1{
-      margin:0 0 6px;
-      font-size:22px;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
-    .sub{
+      position:relative;
+      z-index:1;
+      max-width:820px;
       margin:0;
-      color:var(--muted);
-      font-size:14px;
+      font-size:clamp(2.4rem, 6vw, 5.6rem);
+      letter-spacing:-.055em;
     }
-    .wrap{
-      max-width:980px;
-      margin:0 auto;
-      padding:0 18px 40px;
+    .hero p{
+      position:relative;
+      z-index:1;
+      max-width:760px;
+      margin:18px 0 0;
+      color:#f7ead7;
+      font-size:1.12rem;
     }
-    .nav{
+    .hero-actions{
+      position:relative;
+      z-index:1;
       display:flex;
-      gap:10px;
+      gap:12px;
+      align-items:center;
       flex-wrap:wrap;
-      margin:14px 0 18px;
+      margin-top:26px;
     }
-    .pill{
-      border:1px solid var(--border);
-      background:#fff;
-      padding:8px 10px;
+
+    .tool-bar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      margin:18px 0 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 14px;
+      border:1px solid rgba(222,208,189,.82);
       border-radius:999px;
-      font-size:13px;
-      color:var(--accent);
-      text-decoration:none;
+      background:rgba(251,247,239,.88);
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow-soft);
     }
-    .pill:hover{border-color:#cbd5e1}
-    .grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:14px;
-    }
-    @media (max-width: 860px){
-      .grid{grid-template-columns:1fr}
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:16px;
-      box-shadow: 0 1px 0 rgba(17,24,39,.03);
-    }
-    h2{
-      margin:0 0 10px;
-      font-size:16px;
-      font-weight:800;
-    }
-    h3{
-      margin:18px 0 8px;
-      font-size:14px;
-      font-weight:800;
-    }
-    p{margin:10px 0}
-    .note{
-      background:var(--warn);
-      border:1px solid var(--warnBorder);
-      border-radius:12px;
-      padding:12px;
-      color:#7c2d12;
-      font-size:14px;
-    }
-    .ok{
-      background:var(--ok);
-      border:1px solid var(--okBorder);
-      border-radius:12px;
-      padding:12px;
-      color:#065f46;
-      font-size:14px;
-    }
-    .small{font-size:13px;color:var(--muted)}
-    .btnrow{
+    .status-line{
       display:flex;
       gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
+      align-items:center;
+      color:var(--muted);
+      font-size:.92rem;
+      min-width:0;
     }
-    button{
+    .status-dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:var(--sage);
+      box-shadow:0 0 0 5px rgba(159,175,145,.20);
+      flex:0 0 auto;
+    }
+    .status-text{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+    button, .button-link{
       appearance:none;
-      border:1px solid var(--border);
-      background:#fff;
-      border-radius:10px;
-      padding:9px 11px;
-      font-size:13px;
+      border:1px solid rgba(125,61,42,.20);
+      background:#fff8ed;
+      color:var(--clay-dark);
+      border-radius:999px;
+      padding:10px 15px;
+      font:700 .9rem Arial, Helvetica, sans-serif;
       cursor:pointer;
-      color:var(--accent);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
-    button:hover{border-color:#cbd5e1}
-    button.primary{
-      background:var(--accent);
-      color:#fff;
-      border-color:var(--accent);
+    button:hover, .button-link:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 18px rgba(62,39,35,.10);
+      background:#fffaf4;
     }
-    button.primary:hover{filter:brightness(.95)}
-    .paragraphBox{
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:12px;
-      background:#fff;
-      font-size:15px;
+    button.primary, .button-link.primary{
+      background:var(--clay);
+      color:#fffaf2;
+      border-color:var(--clay);
     }
-    .hi{
-      background:var(--hi);
-      border:1px solid var(--hiBorder);
-      border-radius:6px;
-      padding:0 4px;
-      cursor:pointer;
-      display:inline-block;
-      margin:1px 1px;
+    button.secondary-dark{
+      background:rgba(255,255,255,.10);
+      color:#fffaf2;
+      border-color:rgba(255,255,255,.24);
     }
-    .hi[data-type="overclaim"]{
-      background:#ffe4e6;
-      border-color:#fecdd3;
+
+    .layout{
+      display:grid;
+      grid-template-columns:260px minmax(0, 1fr);
+      gap:24px;
+      align-items:start;
     }
-    .drawer{
-      margin-top:10px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:12px;
-      background:#fafafa;
+    .side-nav{
+      position:sticky;
+      top:88px;
+      border:1px solid rgba(165,83,55,.20);
+      border-radius:28px;
+      padding:20px;
+      background:
+        linear-gradient(180deg, rgba(255,250,242,.95), rgba(248,237,219,.92));
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
     }
-    .drawer h4{
+    .side-nav:before{
+      content:"";
+      display:block;
+      width:52px;
+      height:5px;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--clay), var(--gold));
+      margin:0 0 14px;
+    }
+    .side-nav h2{
+      margin:0 0 14px;
+      font-size:1.35rem;
+      letter-spacing:-.035em;
+    }
+    .side-nav a{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:9px;
+      align-items:center;
+      padding:10px 11px;
+      border-radius:14px;
+      color:var(--ink);
+      text-decoration:none;
+      font-size:.94rem;
+      border:1px solid transparent;
+    }
+    .side-nav a:before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--gold);
+      opacity:.65;
+    }
+    .side-nav a:hover{
+      background:var(--sage-soft);
+      border-color:rgba(159,175,145,.45);
+    }
+
+    main{min-width:0}
+    .section-card{
+      margin:0 0 24px;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(255,250,242,.88);
+      box-shadow:var(--shadow-soft);
+    }
+    .section-card.dark{
+      background:linear-gradient(135deg, var(--plum), var(--plum-2));
+      color:#fffaf2;
+      border-color:rgba(255,255,255,.12);
+    }
+    .section-card.dark p, .section-card.dark .small{color:#f1dfca}
+    .section-card h2{
+      margin:0 0 10px;
+      font-size:clamp(1.75rem, 3vw, 2.65rem);
+      letter-spacing:-.045em;
+    }
+    .section-card h3{
+      margin:24px 0 10px;
+      font-size:1.35rem;
+      letter-spacing:-.025em;
+    }
+    .section-intro{
+      max-width:760px;
+      color:var(--muted);
+      margin:0 0 20px;
+    }
+    .small{font-size:.93rem;color:var(--muted)}
+    .mini-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       margin:0 0 8px;
-      font-size:13px;
+      color:var(--clay-dark);
+      font-size:.78rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
       font-weight:800;
     }
-    ul{margin:8px 0 0 18px}
-    li{margin:6px 0}
-    textarea, input[type="text"]{
-      width:100%;
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:10px 12px;
-      font-size:14px;
-      font-family: inherit;
-      background:#fff;
-    }
-    textarea{min-height:110px;resize:vertical}
+
     .two{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:10px;
+      gap:16px;
     }
-    @media (max-width: 860px){
-      .two{grid-template-columns:1fr}
+    .three{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
     }
-    .practiceItem{
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:12px;
-      background:#fff;
-      margin-top:10px;
-    }
-    .practiceItem .row{
+    .field-group{
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-top:10px;
+      flex-direction:column;
+      gap:7px;
+      margin-top:12px;
+    }
+    label{
+      font-weight:700;
+      color:var(--ink);
+      font-size:.92rem;
+    }
+    input[type="text"], textarea, select{
+      width:100%;
+      border:1px solid #cdbba6;
+      border-radius:16px;
+      padding:12px 13px;
+      background:#fffdf8;
+      color:var(--ink);
+      font:1rem Arial, Helvetica, sans-serif;
+      line-height:1.45;
+    }
+    textarea{min-height:132px;resize:vertical}
+    input[type="checkbox"]{width:1.05rem;height:1.05rem;accent-color:var(--clay)}
+
+    .instruction-box{
+      border:1px solid rgba(165,83,55,.26);
+      background:linear-gradient(180deg, #fff8ed, #f9eddb);
+      border-radius:20px;
+      padding:16px;
+      color:var(--clay-dark);
+    }
+    .instruction-box ol, .instruction-box ul{margin:8px 0 0 22px; padding:0}
+    .instruction-box li{margin:5px 0}
+
+    .sample-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap:18px;
+      align-items:start;
+    }
+    .paragraph-box{
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      background:#fffdf8;
+      font-size:1.06rem;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);
+      white-space:pre-wrap;
+    }
+    .help-panel{
+      border:1px solid rgba(159,175,145,.55);
+      border-radius:22px;
+      padding:18px;
+      background:linear-gradient(180deg, #f7f8ef, #edf2e7);
+    }
+    .click-cue{
+      display:none;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:16px;
+      background:var(--gold-soft);
+      border:1px solid rgba(215,170,85,.55);
+      color:#594019;
+      font-weight:800;
+      font-size:.94rem;
+    }
+    .click-cue.show{display:block;}
+    .help-panel h3, .drawer h3{margin-top:0}
+    .highlighted{
+      display:inline;
+      padding:2px 5px;
+      margin:0 1px;
+      border-radius:8px;
+      border:1px solid rgba(215,170,85,.82);
+      background:rgba(245,231,199,.92);
+      cursor:pointer;
+      color:#3f2a16;
+      font-weight:700;
+    }
+    .highlighted[data-type="overclaim"]{
+      border-color:rgba(157,44,31,.35);
+      background:var(--rose-soft);
+      color:var(--red);
     }
     .tag{
-      font-size:12px;
-      border:1px solid var(--border);
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      border:1px solid rgba(102,95,99,.18);
       border-radius:999px;
-      padding:4px 8px;
+      padding:4px 9px;
+      background:#fffaf2;
       color:var(--muted);
-      background:#fff;
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:.02em;
     }
-    select{
-      border:1px solid var(--border);
-      border-radius:10px;
-      padding:8px 10px;
-      font-size:13px;
-      background:#fff;
-    }
-    .answerKey{
-      display:none;
-      margin-top:10px;
-      border-top:1px dashed var(--border);
-      padding-top:10px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .checklist label{
+    .tag.clay{color:var(--clay-dark); border-color:rgba(165,83,55,.25); background:#fff3e8}
+    .tag.red{color:var(--red); border-color:rgba(157,44,31,.25); background:#fff0ed}
+
+    .word-cloud{
       display:flex;
+      flex-wrap:wrap;
       gap:10px;
-      align-items:flex-start;
-      margin:8px 0;
-      font-size:14px;
+      margin-top:14px;
     }
-    .footer{
-      margin-top:18px;
-      font-size:12px;
-      color:var(--muted);
-    }
-    .stickyTop{
-      position:sticky;
-      top:0;
-      background:var(--bg);
-      padding:10px 0 8px;
-      z-index:5;
-      border-bottom:1px solid rgba(229,231,235,.8);
-      backdrop-filter: blur(6px);
-    }
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      padding:2px 6px;
-      border:1px solid var(--border);
-      border-radius:8px;
-      background:#fff;
-      color:var(--muted);
+    .word-card{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 12px;
+      background:#fffdf8;
+      color:var(--ink);
+      font-size:.92rem;
     }
 
-    /* ---------- PRINT STYLES (for Save as PDF) ---------- */
-    @media print {
-      :root { --bg:#fff; --card:#fff; --border:#000; }
-      body { background:#fff !important; }
-      header { padding:0; }
-      .stickyTop, .nav, .btnrow, button, .pill { display:none !important; }
-      .wrap { padding:0; max-width:none; }
-      .card{
+    .stem-list{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+      margin-top:18px;
+    }
+    .stem{
+      position:relative;
+      border:1px solid rgba(215,170,85,.45);
+      border-radius:20px;
+      padding:18px 18px 18px 20px;
+      background:linear-gradient(180deg, #fffdf8, #fff6e8);
+      box-shadow:0 10px 22px rgba(62,39,35,.07);
+    }
+    .stem strong{
+      display:block;
+      margin-bottom:7px;
+      color:var(--clay-dark);
+      font-size:.82rem;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+    }
+    .stem.feature{
+      grid-column:1 / -1;
+      display:grid;
+      grid-template-columns:minmax(0, .75fr) minmax(0, 1.25fr);
+      gap:18px;
+      align-items:center;
+      background:linear-gradient(135deg, #fff8ed, #f3ead7);
+      border-color:rgba(165,83,55,.28);
+    }
+    .stem-phrase{
+      font-family:Georgia, 'Times New Roman', serif;
+      font-size:clamp(1.5rem, 3vw, 2.45rem);
+      line-height:1;
+      letter-spacing:-.04em;
+      color:var(--plum);
+    }
+
+    .practice-item{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+      background:#fffdf8;
+      margin-top:14px;
+    }
+    .practice-item p{margin:0 0 10px}
+    .practice-controls{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+    }
+    .result-text{font-weight:800; color:#3f6f39}
+    .result-text.wrong{color:var(--red)}
+    details.answer-key{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fffdf8;
+      padding:10px 14px;
+    }
+    summary{cursor:pointer;font-weight:800;color:var(--clay-dark)}
+
+    .checklist{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+    .checklist label{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:10px;
+      align-items:start;
+      padding:12px 13px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fffdf8;
+      font-weight:500;
+    }
+
+    .print-only{display:none}
+    .screen-note{
+      margin-top:20px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:var(--sage-soft);
+      border:1px solid rgba(159,175,145,.5);
+      color:#384534;
+      font-size:.95rem;
+    }
+
+    @media (max-width: 940px){
+      .layout{grid-template-columns:1fr}
+      .side-nav{position:relative; top:auto}
+      .side-nav nav{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:4px}
+      .sample-grid, .two, .three, .stem-list, .stem.feature{grid-template-columns:1fr}
+      .tool-bar{border-radius:22px; align-items:flex-start; flex-direction:column}
+      .hero{padding:30px 24px}
+    }
+    @media (max-width: 560px){
+      .page-shell{width:min(100% - 22px, 1180px); padding-top:14px}
+      .section-card{padding:22px 18px}
+      .side-nav nav{grid-template-columns:1fr}
+      .status-text{white-space:normal}
+    }
+
+    @media print{
+      @page{margin:.55in}
+      body{background:#fff; color:#000; font-size:12pt}
+      .skip-link, .hero, .tool-bar, .side-nav, .screen-note, .hero-actions, button, .button-link, .no-print{display:none !important}
+      .page-shell{width:100%; padding:0; margin:0}
+      .layout{display:block}
+      .section-card, .section-card.dark{
         box-shadow:none !important;
-        border:1px solid #000 !important;
-        border-radius:0 !important;
-        page-break-inside: avoid;
-        margin:0 0 12px 0;
-      }
-      .drawer, .note, .ok{
         border:1px solid #000 !important;
         border-radius:0 !important;
         background:#fff !important;
         color:#000 !important;
+        margin:0 0 14px !important;
+        padding:14px !important;
+        page-break-inside:avoid;
       }
-      .paragraphBox{
+      .section-card.dark p, .section-card.dark .small{color:#000 !important}
+      h1, h2, h3{font-family:Georgia, 'Times New Roman', serif; color:#000}
+      .print-only{display:block}
+      .sample-grid, .two, .three{display:block}
+      input[type="text"], textarea, select, .paragraph-box, .help-panel, .instruction-box, .practice-item, .checklist label, details.answer-key{
         border:1px solid #000 !important;
         border-radius:0 !important;
+        background:#fff !important;
+        color:#000 !important;
+        box-shadow:none !important;
       }
-      textarea, input[type="text"]{
-        border:1px solid #000 !important;
-        border-radius:0 !important;
-        min-height:140px;
-      }
-      a { color:#000 !important; text-decoration:none !important; }
-      .hi { background:transparent !important; border:none !important; padding:0 !important; }
-      #printHelp { display:none !important; } /* hide the on-screen “how to” box */
-      .pageBreakAfter { page-break-after: always; }
+      textarea{min-height:95px}
+      .highlighted{background:transparent !important; border:none !important; padding:0 !important; color:#000 !important; font-weight:400 !important}
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <h1>Objective Voice Toolkit — Page 1: Defensible Claims</h1>
-    <p class="sub">The point of this page: stop turning source facts into “obviously true” opinions (great, rewarding, best, etc.).</p>
-  </header>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-  <div class="wrap">
-
-    <!-- Student info + submission instructions -->
-    <section class="card" id="studentInfo">
-      <h2>Before you start (for submission)</h2>
-
-      <div class="two">
-        <div>
-          <label class="small" for="studentName"><strong>Name</strong></label>
-          <input id="studentName" type="text" placeholder="First + last name" />
-        </div>
-        <div>
-          <label class="small" for="studentClass"><strong>Class / Section</strong></label>
-          <input id="studentClass" type="text" placeholder="Example: ENGL&101 (T/TH 9:30)" />
-        </div>
+  <div class="page-shell">
+    <header class="hero">
+      <p class="eyebrow">ENG 101 Writing Practice</p>
+      <h1>Objective Voice Toolkit: Defensible Claims</h1>
+      <p>This page helps you find places where a draft jumps from a source fact to an overconfident conclusion. You will practice replacing vague verdict words with specific, careful, evidence-based claims.</p>
+      <div class="hero-actions">
+        <a class="button-link secondary-dark" href="#student-info">Start with submission info</a>
+        <a class="button-link secondary-dark" href="#sample">Practice with the sample</a>
       </div>
+    </header>
 
-      <div class="two" style="margin-top:10px">
-        <div>
-          <label class="small" for="studentDate"><strong>Date</strong></label>
-          <input id="studentDate" type="text" placeholder="Example: March 3, 2026" />
-        </div>
-        <div>
-          <label class="small" for="studentTopic"><strong>Topic / Career you chose (optional)</strong></label>
-          <input id="studentTopic" type="text" placeholder="Example: Registered nurse / Veterinarian / etc." />
-        </div>
+    <div class="tool-bar" aria-label="Page tools">
+      <div class="status-line" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="status-text" id="saveStatus">Your typing autosaves in this browser.</span>
       </div>
-
-      <div class="note" id="printHelp" style="margin-top:12px">
-        <strong>How to turn this in:</strong>
-        <ol style="margin:8px 0 0 18px">
-          <li>Type your work directly in the boxes on this page.</li>
-          <li>Click <strong>Print / Save as PDF</strong>.</li>
-          <li>Choose <strong>Save as PDF</strong>, save the file, and upload it to Canvas.</li>
-        </ol>
-        <p class="small" style="margin-top:10px">
-          If your PDF looks weird, try using Chrome. (Safari usually works too.)
-        </p>
-      </div>
-
-      <div class="btnrow">
-        <button class="primary" id="btnPrint">Print / Save as PDF</button>
-      </div>
-    </section>
-
-    <div class="stickyTop">
-      <div class="nav">
-        <a class="pill" href="#sample">Sample paragraph</a>
-        <a class="pill" href="#spot">Spot verdict words</a>
-        <a class="pill" href="#fix">Fix the leap</a>
-        <a class="pill" href="#practice">Practice set</a>
-        <a class="pill" href="#rewrite">Rewrite task</a>
-        <a class="pill" href="#check">Self-check</a>
-      </div>
+      <button class="primary" type="button" onclick="window.print()">Print / Save as PDF</button>
     </div>
 
-    <div class="grid">
-      <section class="card" id="sample">
-        <h2>1) Sample paragraph (verdict / overconfident conclusions)</h2>
-
-        <div class="paragraphBox" id="paraBox" aria-label="Sample paragraph"></div>
-
-        <div class="btnrow">
-          <button class="primary" id="btnHighlight">Highlight verdict words</button>
-          <button id="btnReset">Reset paragraph</button>
-        </div>
-
-        <div class="drawer" id="feedback" aria-live="polite">
-          <h4>Click a highlighted word/phrase to get rewrite options.</h4>
-          <p class="small">Tip: “Job growth” is a fact. “Great career” is a verdict. A fact doesn’t automatically prove a verdict.</p>
-        </div>
-
-        <div class="note" style="margin-top:12px">
-          <strong>What’s wrong here (plain terms):</strong>
-          <ul>
-            <li>It uses verdict words like <em>great, stable, smart, rewarding, worth it, better</em>.</li>
-            <li>It treats facts as if they automatically prove those verdicts.</li>
-            <li>It overclaims with phrases like <em>always</em> (usually too broad).</li>
-          </ul>
-        </div>
-
-        <div class="ok" style="margin-top:12px">
-          <strong>The rule:</strong> If you use a verdict word, you must do at least one:
-          <ul>
-            <li><strong>Define it</strong> (what do you mean by “great”? pay? schedule? job satisfaction?)</li>
-            <li><strong>Measure it</strong> (use evidence you can point to)</li>
-            <li><strong>Limit it</strong> (great for who, under what conditions?)</li>
-          </ul>
-        </div>
-      </section>
-
-      <aside class="card" id="spot">
-        <h2>2) Verdict words to watch</h2>
-        <p class="small">These aren’t “banned.” They just need proof or a more precise replacement.</p>
-
-        <div class="two">
-          <div>
-            <h3>Verdict words</h3>
-            <ul>
-              <li>great</li>
-              <li>rewarding</li>
-              <li>worth it</li>
-              <li>better / best</li>
-              <li>meaningful</li>
-              <li>interesting</li>
-              <li>important</li>
-              <li>cool</li>
-              <li>smart (as a judgment)</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Overclaim words</h3>
-            <ul>
-              <li>always</li>
-              <li>never</li>
-              <li>anyone</li>
-              <li>everyone</li>
-              <li>proves</li>
-              <li>shows (when it’s really “suggests”)</li>
-            </ul>
-          </div>
-        </div>
-
-        <h3 id="fix">3) Fix the “fact → verdict” leap</h3>
-        <p class="small">Use these stems when you feel yourself trying to jump from a fact to a vibe.</p>
-
-        <ul>
-          <li><strong>Instead of “great,” try:</strong> “offers strong demand, though it requires…”</li>
-          <li><strong>Instead of “rewarding,” try:</strong> “some workers report satisfaction because…, though…”</li>
-          <li><strong>Instead of “best way,” try:</strong> “one effective way is…”</li>
-          <li><strong>Instead of “proves,” try:</strong> “suggests,” “indicates,” “points to”</li>
-          <li><strong>Instead of “always/anyone,” try:</strong> “often,” “many,” “some,” “in some settings,” “for students who…”</li>
-        </ul>
-
-        <div class="drawer">
-          <h4>Quick upgrade move</h4>
-          <p class="small" style="margin:0">
-            When you want to say “great,” force yourself to name <strong>two tradeoffs</strong>:
-            <br>
-            “This career offers ___, but it also requires ___.”
-          </p>
-        </div>
+    <div class="layout">
+      <aside class="side-nav" aria-label="Page sections">
+        <h2>On this page</h2>
+        <nav>
+          <a href="#student-info">Before you start</a>
+          <a href="#sample">Sample paragraph</a>
+          <a href="#watch">Verdict words</a>
+          <a href="#fix">Fix the leap</a>
+          <a href="#practice">Practice set</a>
+          <a href="#rewrite">Rewrite task</a>
+          <a href="#check">Self-check</a>
+        </nav>
       </aside>
-    </div>
 
-    <section class="card" id="practice" style="margin-top:14px">
-      <h2>4) Practice set: what kind of sentence is this?</h2>
-      <p class="small">
-        Label each sentence:
-        <span class="kbd">A</span> defensible claim (specific, measurable, or careful) •
-        <span class="kbd">B</span> fact → verdict leap (needs proof/definition) •
-        <span class="kbd">C</span> overclaim (too broad: always/anyone/etc.)
-      </p>
+      <main id="main">
+        <section class="section-card" id="student-info">
+          <p class="mini-label">Before you start</p>
+          <h2>Submission information</h2>
+          <p class="section-intro">Type your work directly into this page. Your answers save in this browser, but you still need to print or save the finished page as a PDF and upload it to Canvas.</p>
 
-      <div id="practiceList"></div>
-
-      <div class="btnrow">
-        <button id="btnShowKey">Show answer key</button>
-        <button id="btnHideKey">Hide answer key</button>
-      </div>
-
-      <div class="answerKey" id="answerKey">
-        <strong>Answer key (with quick why):</strong>
-        <ol>
-          <li><strong>B</strong> — job growth doesn’t automatically prove “great.”</li>
-          <li><strong>A</strong> — specific consequence (training cost/time) without verdict.</li>
-          <li><strong>B</strong> — “rewarding” is a verdict without evidence.</li>
-          <li><strong>A</strong> — describes conditions; no leap.</li>
-          <li><strong>C</strong> — “anyone” overclaim + “cool” is vague.</li>
-          <li><strong>A</strong> — limited to a type of person + specific requirements.</li>
-          <li><strong>B</strong> — “stable and smart” are judgments; needs evidence + definition.</li>
-          <li><strong>C</strong> — “always” + “never” language is too absolute.</li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="card" id="rewrite" style="margin-top:14px">
-      <h2>5) Rewrite task</h2>
-      <p class="small">
-        Step 1: Copy one sentence from YOUR DRAFT ESSAY that includes a verdict word.
-        Step 2: Rewrite it so it becomes a defensible claim.
-        Step 3: Add a citation placeholder if needed (example: <span class="kbd">(BLS)</span>).
-      </p>
-
-      <div class="two">
-        <div>
-          <h3>Sentence I’m revising</h3>
-          <textarea id="studentOriginal" placeholder="Paste one sentence from the YOUR ESSAY here..."></textarea>
-          <p class="small">Tip: pick a sentence that uses words like <em>great, rewarding, worth it, better, proves</em>.</p>
-        </div>
-        <div>
-          <h3>My revised defensible claim</h3>
-          <textarea id="studentRewrite" placeholder="Rewrite it here. Try: 'This career offers ___, but it also requires ___ (SOURCE).'" ></textarea>
-          <div class="btnrow">
-            <button id="btnQuickStem">Insert a rewrite stem</button>
-            <button id="btnCopyRewrite">Copy my rewrite</button>
+          <div class="three">
+            <div class="field-group">
+              <label for="studentName">Name</label>
+              <input id="studentName" type="text" autocomplete="name" placeholder="First and last name" data-save>
+            </div>
+            <div class="field-group">
+              <label for="studentClass">Class / Section</label>
+              <input id="studentClass" type="text" placeholder="Example: ENGL&101" data-save>
+            </div>
+            <div class="field-group">
+              <label for="studentDate">Date</label>
+              <input id="studentDate" type="text" placeholder="Month day, year" data-save>
+            </div>
           </div>
-          <p class="small" id="rewriteHint">Use evidence language: “suggests/indicates” instead of “proves.”</p>
-        </div>
-      </div>
 
-      <h3 style="margin-top:14px">Make “great” measurable</h3>
-      <p class="small">If you keep a verdict word, define what you mean so it can be proven.</p>
-      <div class="two">
-        <div>
-          <label class="small" for="meaningBox"><strong>What I mean by “great” (pick 1–2):</strong></label>
-          <textarea id="meaningBox" placeholder="Example: 'By “great,” I mean stable employment and strong pay compared to ___.'"></textarea>
-        </div>
-        <div>
-          <label class="small" for="tradeoffBox"><strong>Tradeoffs I should mention (at least 1):</strong></label>
-          <textarea id="tradeoffBox" placeholder="Example: 'However, the training takes ___ years and costs ___, which may limit access.'"></textarea>
-        </div>
-      </div>
-    </section>
+          <div class="field-group">
+            <label for="studentTopic">Topic / Career you chose (optional)</label>
+            <input id="studentTopic" type="text" placeholder="Example: nursing, dental hygiene, cybersecurity" data-save>
+          </div>
 
-    <section class="card" id="check" style="margin-top:14px">
-      <h2>6) Self-check before you submit</h2>
-      <div class="checklist">
-        <label><input type="checkbox"> I filled out my name/class/date at the top.</label>
-        <label><input type="checkbox"> I found at least 3 verdict/overclaim words in the sample paragraph.</label>
-        <label><input type="checkbox"> I rewrote at least 1 sentence so it became specific and defensible.</label>
-        <label><input type="checkbox"> I avoided absolute words like “always/anyone,” or I limited the claim.</label>
-        <label><input type="checkbox"> I used careful research language (suggests/indicates) instead of “proves.”</label>
-        <label><input type="checkbox"> If I made a judgment (great/rewarding/best), I defined what I meant and backed it with evidence.</label>
-        <label><input type="checkbox"> I saved as a PDF and uploaded it to Canvas.</label>
-      </div>
+          <div class="instruction-box" style="margin-top:18px">
+            <strong>How to turn this in:</strong>
+            <ol>
+              <li>Type your work directly into the boxes on this page.</li>
+              <li>Click Print / Save as PDF.</li>
+              <li>Save the PDF and upload it to Canvas.</li>
+            </ol>
+          </div>
+        </section>
 
-      <div class="footer">
-         
-      </div>
-    </section>
+        <section class="section-card" id="sample">
+          <p class="mini-label">Step 1</p>
+          <h2>Sample paragraph: verdicts and overconfident conclusions</h2>
+          <p class="section-intro">The paragraph below sounds confident, but it uses broad judgment words that need more proof. Click the button to highlight the words and phrases that need careful revision.</p>
+
+          <div class="sample-grid">
+            <div>
+              <div class="paragraph-box" id="paraBox" aria-live="polite"></div>
+              <div class="click-cue" id="clickCue">Now click any highlighted word or phrase to see what is wrong with it and how to revise it.</div>
+              <div class="hero-actions no-print" style="margin-top:14px">
+                <button class="primary" id="btnHighlight" type="button">Highlight verdict words</button>
+                <button id="btnReset" type="button">Reset paragraph</button>
+              </div>
+            </div>
+            <aside class="help-panel" id="feedback" aria-live="polite"></aside>
+          </div>
+
+          <div class="instruction-box" style="margin-top:18px">
+            <strong>Plain language rule:</strong> A source fact does not automatically prove a verdict. If you use a word like <em>great</em>, <em>rewarding</em>, <em>best</em>, or <em>worth it</em>, you need to define it, measure it, or limit it.
+          </div>
+        </section>
+
+        <section class="section-card dark" id="watch">
+          <p class="mini-label" style="color:#f5e7c7">Step 2</p>
+          <h2>Verdict words to watch</h2>
+          <p class="section-intro">These words are not banned. They just need proof, definition, or a more precise replacement.</p>
+
+          <h3>Judgment words</h3>
+          <div class="word-cloud" aria-label="Verdict words">
+            <span class="word-card">great</span>
+            <span class="word-card">rewarding</span>
+            <span class="word-card">worth it</span>
+            <span class="word-card">better / best</span>
+            <span class="word-card">meaningful</span>
+            <span class="word-card">interesting</span>
+            <span class="word-card">important</span>
+            <span class="word-card">cool</span>
+            <span class="word-card">smart</span>
+          </div>
+
+          <h3>Overclaim words</h3>
+          <div class="word-cloud" aria-label="Overclaim words">
+            <span class="word-card">always</span>
+            <span class="word-card">never</span>
+            <span class="word-card">anyone</span>
+            <span class="word-card">everyone</span>
+            <span class="word-card">proves</span>
+            <span class="word-card">shows, when you mean suggests</span>
+          </div>
+        </section>
+
+        <section class="section-card" id="fix">
+          <p class="mini-label">Step 3</p>
+          <h2>Fix the fact to verdict leap</h2>
+          <p class="section-intro">Use these stems when you feel yourself trying to jump from a fact to a vibe. The goal is not to make your writing less confident. The goal is to make the confidence easier to prove.</p>
+
+          <div class="stem-list">
+            <div class="stem feature">
+              <div class="stem-phrase">fact → verdict</div>
+              <div>
+                <strong>Main move</strong>
+                A source fact can support your idea, but it cannot do all the thinking for you. Add the reason, the limit, or the tradeoff so the reader can see how your evidence connects to your claim.
+              </div>
+            </div>
+            <div class="stem"><strong>Instead of “great”</strong>Try: “offers strong demand, though it requires...”</div>
+            <div class="stem"><strong>Instead of “rewarding”</strong>Try: “some workers report satisfaction because..., though...”</div>
+            <div class="stem"><strong>Instead of “best way”</strong>Try: “one effective way is...”</div>
+            <div class="stem"><strong>Instead of “proves”</strong>Try: “suggests,” “indicates,” or “points to.”</div>
+            <div class="stem"><strong>Instead of “always” or “anyone”</strong>Try: “often,” “many,” “some,” “in some settings,” or “for students who...”</div>
+          </div>
+
+          <div class="instruction-box" style="margin-top:18px">
+            <strong>Quick upgrade move:</strong> When you want to say “great,” force yourself to name two tradeoffs. Try this sentence shape: “This career offers ___, but it also requires ___.”
+          </div>
+        </section>
+
+        <section class="section-card" id="practice">
+          <p class="mini-label">Step 4</p>
+          <h2>Practice set: what kind of sentence is this?</h2>
+          <p class="section-intro">Label each sentence. A means defensible claim. B means fact to verdict leap. C means overclaim.</p>
+
+          <div class="instruction-box">
+            <strong>Use these choices:</strong>
+            <ul>
+              <li>A: defensible claim, because it is specific, measurable, or careful</li>
+              <li>B: fact to verdict leap, because it needs proof or definition</li>
+              <li>C: overclaim, because the language is too broad</li>
+            </ul>
+          </div>
+
+          <div id="practiceList"></div>
+
+          <details class="answer-key">
+            <summary>Show answer key</summary>
+            <ol>
+              <li>B: job growth does not automatically prove “great.”</li>
+              <li>A: specific consequence without a verdict.</li>
+              <li>B: “rewarding” is a verdict without evidence.</li>
+              <li>A: describes a condition without overclaiming.</li>
+              <li>C: “anyone” overclaim and “cool” is vague.</li>
+              <li>A: limited to a type of person and specific requirements.</li>
+              <li>B: “stable and smart” are judgments that need evidence and definition.</li>
+              <li>C: “always” and “never” are too absolute.</li>
+            </ol>
+          </details>
+        </section>
+
+        <section class="section-card" id="rewrite">
+          <p class="mini-label">Step 5</p>
+          <h2>Rewrite one sentence from your draft</h2>
+          <p class="section-intro">Pick one sentence from your draft essay that includes a verdict word. Rewrite it so the claim becomes specific, careful, and easier to support with evidence.</p>
+
+          <div class="two">
+            <div class="field-group">
+              <label for="studentOriginal">Sentence I am revising</label>
+              <textarea id="studentOriginal" placeholder="Paste one sentence from your essay here. Look for words like great, rewarding, worth it, better, proves." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="studentRewrite">My revised defensible claim</label>
+              <textarea id="studentRewrite" placeholder="Rewrite it here. Try: This career offers ___, but it also requires ___ (SOURCE)." data-save></textarea>
+              <p class="small">Use evidence language like “suggests” or “indicates” instead of “proves.”</p>
+            </div>
+          </div>
+
+          <h3>Make “great” measurable</h3>
+          <p class="section-intro">Find one sentence in your own draft where you use the word “great.” If you do not use that exact word, choose a sentence where you make a similar judgment, such as “good,” “best,” “smart,” “rewarding,” or “worth it.”</p>
+          <div class="two">
+            <div class="field-group">
+              <label for="greatSentenceBox">My sentence that uses “great” or a similar judgment word</label>
+              <textarea id="greatSentenceBox" placeholder="Paste the sentence from your own draft here." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="meaningBox">What I actually mean by “great”</label>
+              <textarea id="meaningBox" placeholder="Example: By “great,” I mean stable employment, strong pay, flexible settings, or useful transfer options." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="tradeoffBox">One tradeoff I should mention</label>
+              <textarea id="tradeoffBox" placeholder="Example: However, the training takes ___ years and costs ___, which may limit access." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="greatRewriteBox">My revised sentence without the vague version of “great”</label>
+              <textarea id="greatRewriteBox" placeholder="Example: This career may offer stable employment and flexible work settings, but the training requires ___ and ___ (SOURCE)." data-save></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="check">
+          <p class="mini-label">Step 6</p>
+          <h2>Self-check before you submit</h2>
+          <p class="section-intro">Use this list before you save the page as a PDF.</p>
+
+          <div class="checklist">
+            <label><input type="checkbox" data-save-check="check1"> <span>I filled out my name, class, and date at the top.</span></label>
+            <label><input type="checkbox" data-save-check="check2"> <span>I found at least 3 verdict or overclaim words in the sample paragraph.</span></label>
+            <label><input type="checkbox" data-save-check="check3"> <span>I rewrote at least 1 sentence so it became specific and defensible.</span></label>
+            <label><input type="checkbox" data-save-check="check4"> <span>I avoided absolute words like “always” or “anyone,” or I limited the claim.</span></label>
+            <label><input type="checkbox" data-save-check="check5"> <span>I used careful research language like “suggests” or “indicates” instead of “proves.”</span></label>
+            <label><input type="checkbox" data-save-check="check6"> <span>If I made a judgment, I defined what I meant and backed it with evidence.</span></label>
+            <label><input type="checkbox" data-save-check="check7"> <span>I saved this page as a PDF and uploaded it to Canvas.</span></label>
+          </div>
+
+          <p class="screen-note">Reminder: autosave keeps your work in this browser only. It does not submit anything to Canvas.</p>
+        </section>
+      </main>
+    </div>
   </div>
 
   <script>
-    // ---------- Content ----------
-    const originalParagraph =
-`Becoming a registered nurse is a great career choice because there will always be people who need medical care, and nurses are in demand. The Bureau of Labor Statistics explains that nursing jobs are projected to grow, which proves it is a stable job and a smart path for the future. Nursing is also a rewarding career because you get to help people every day and make a real difference. Even though the training can be challenging, it is worth it because nurses make good money and can work in many different settings like hospitals, schools, or clinics. Overall, nursing is a better option than a lot of other careers because it has job security, good pay, and it is meaningful work.`;
+    const STORAGE_PREFIX = "objective-voice-defensible-claims-v2:";
+
+    const originalParagraph = `Becoming a registered nurse is a great career choice because there will always be people who need medical care, and nurses are in demand. The Bureau of Labor Statistics explains that nursing jobs are projected to grow, which proves it is a stable job and a smart path for the future. Nursing is also a rewarding career because you get to help people every day and make a real difference.
+Even though the training can be challenging, it is worth it because nurses make good money and can work in many different settings like hospitals, schools, or clinics. Overall, nursing is a better option than a lot of other careers because it has job security, good pay, and it is meaningful work.`;
 
     const verdictPhrases = [
       "a great career choice",
@@ -548,348 +827,271 @@
       "in demand"
     ];
 
-    const overclaimPhrases = [
-      "will always",
-      "always",
-      "proves"
-    ];
+    const overclaimPhrases = ["will always", "always", "proves"];
 
     const popupContent = {
       "a great career choice": {
-        type: "verdict",
-        title: "“Great career choice” is a verdict (not a fact).",
-        tips: [
-          "Define what “great” means here (pay? schedule? job satisfaction? job stability?).",
-          "Replace the verdict with something measurable.",
-          "Add at least one tradeoff."
-        ],
-        stems: [
-          "This career offers ______, though it also requires ______ (SOURCE).",
-          "Projected demand suggests ______, but factors like ______ and ______ affect whether it is a good fit (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Great career choice” is a verdict, not a fact.",
+        tips:["Define what “great” means here: pay, schedule, job satisfaction, or job stability.", "Replace the verdict with something measurable.", "Add at least one tradeoff."],
+        stems:["This career offers ______, though it also requires ______ (SOURCE).", "Projected demand suggests ______, but factors like ______ and ______ affect whether it is a good fit (SOURCE)."]
       },
       "rewarding career": {
-        type: "verdict",
-        title: "“Rewarding” is a feeling. In academic writing, it needs evidence or a careful frame.",
-        tips: [
-          "Limit the claim: rewarding for who?",
-          "Use evidence: surveys, retention, burnout research, interviews (SOURCE).",
-          "Add a complication: rewarding, but demanding."
-        ],
-        stems: [
-          "Some nurses report job satisfaction because ______, though ______ can affect that experience (SOURCE).",
-          "This work involves ______, which may feel meaningful for people who value ______ (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Rewarding” is a feeling. In academic writing, it needs evidence or a careful frame.",
+        tips:["Limit the claim: rewarding for who?", "Use evidence such as surveys, retention, burnout research, or interviews.", "Add a complication: rewarding, but demanding."],
+        stems:["Some nurses report job satisfaction because ______, though ______ can affect that experience (SOURCE).", "This work involves ______, which may feel meaningful for people who value ______ (SOURCE)."]
       },
       "worth it": {
-        type: "verdict",
-        title: "“Worth it” depends on what you’re comparing (cost, time, pay, stress).",
-        tips: [
-          "Name the costs: years of training, tuition, workload.",
-          "Name the payoff: wages, stability, mobility, benefits.",
-          "Avoid universal language: worth it for everyone → not true."
-        ],
-        stems: [
-          "This path requires ______, but it may offer ______ depending on ______ (SOURCE).",
-          "Whether it is “worth it” depends on ______, including ______ and ______ (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Worth it” depends on what you are comparing.",
+        tips:["Name the costs: years of training, tuition, workload.", "Name the payoff: wages, stability, mobility, benefits.", "Avoid making the claim sound true for everyone."],
+        stems:["This path requires ______, but it may offer ______ depending on ______ (SOURCE).", "Whether it is “worth it” depends on ______, including ______ and ______ (SOURCE)."]
       },
       "will always": {
-        type: "overclaim",
-        title: "“Always” is usually too absolute.",
-        tips: [
-          "Replace with careful language: often, typically, in many settings.",
-          "Limit the scope: in the U.S., in hospitals, in rural areas, etc."
-        ],
-        stems: [
-          "There will likely continue to be a need for ______, especially ______ (SOURCE).",
-          "Healthcare demand often remains high because ______ (SOURCE)."
-        ]
+        type:"overclaim",
+        title:"“Always” is usually too absolute.",
+        tips:["Replace with careful language: often, typically, in many settings.", "Limit the scope: in the U.S., in hospitals, in rural areas, etc."],
+        stems:["There will likely continue to be a need for ______, especially ______ (SOURCE).", "Healthcare demand often remains high because ______ (SOURCE)."]
+      },
+      "always": {
+        type:"overclaim",
+        title:"“Always” is usually too absolute.",
+        tips:["Replace with often, usually, many, some, or in many settings.", "Name the situation where your claim applies."],
+        stems:["This is often true in ______ settings because ______ (SOURCE).", "Many ______ experience ______, but this can vary by ______ (SOURCE)."]
       },
       "proves": {
-        type: "overclaim",
-        title: "“Proves” is too strong for most research writing.",
-        tips: [
-          "Use: suggests / indicates / points to / supports the idea that…",
-          "Then explain what the evidence does *not* show."
-        ],
-        stems: [
-          "This suggests ______, though it does not guarantee ______ (SOURCE).",
-          "This indicates ______, but other factors like ______ still matter (SOURCE)."
-        ]
+        type:"overclaim",
+        title:"“Proves” is too strong for most research writing.",
+        tips:["Use suggests, indicates, points to, or supports the idea that.", "Then explain what the evidence does not show."],
+        stems:["This suggests ______, though it does not guarantee ______ (SOURCE).", "This indicates ______, but other factors like ______ still matter (SOURCE)."]
       },
       "a better option": {
-        type: "verdict",
-        title: "“Better” requires a comparison standard (better than what, for who?).",
-        tips: [
-          "Name the comparison: better than ___ in terms of ___ (pay, schedule, stability).",
-          "Limit it: better for students who ___."
-        ],
-        stems: [
-          "Compared to ______, this career offers ______, though it also requires ______ (SOURCE).",
-          "This may be a strong option for people who want ______ and can manage ______ (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Better” requires a comparison standard.",
+        tips:["Name what you are comparing it to.", "Name the category: pay, schedule, stability, training time, or cost.", "Limit it to a specific student or career goal."],
+        stems:["Compared to ______, this career offers ______, though it also requires ______ (SOURCE).", "This may be a strong option for people who want ______ and can manage ______ (SOURCE)."]
       },
       "meaningful work": {
-        type: "verdict",
-        title: "“Meaningful” is vague unless you define it.",
-        tips: [
-          "Define it: direct impact on patients, community health, etc.",
-          "Back it with evidence (or limit the claim)."
-        ],
-        stems: [
-          "This work involves ______, which can create a sense of purpose for some workers (SOURCE).",
-          "Many roles in this field directly affect ______, especially ______ (SOURCE)."
-        ]
-      },
-      "good money": {
-        type: "verdict",
-        title: "“Good money” is relative. Use numbers or comparisons.",
-        tips: [
-          "Replace with measurable language: median pay is ___.",
-          "Compare it to: local cost of living, another career, minimum wage, etc."
-        ],
-        stems: [
-          "According to ______, the median pay is ______, which is higher/lower than ______ (SOURCE).",
-          "Wages vary by ______, so earnings depend on ______ (SOURCE)."
-        ]
-      },
-      "in demand": {
-        type: "verdict",
-        title: "“In demand” is a claim—support it with evidence.",
-        tips: [
-          "Use a source (BLS, state labor market data, job postings trends).",
-          "Avoid jumping to “therefore great.” Demand is only one factor."
-        ],
-        stems: [
-          "Employment projections indicate ______ demand for ______ (SOURCE).",
-          "Demand may increase because ______, though ______ affects hiring (SOURCE)."
-        ]
-      },
-      "stable job": {
-        type: "verdict",
-        title: "“Stable” needs a definition (stable where? stable pay? stable hiring?).",
-        tips: [
-          "Stability could mean: low unemployment, steady hiring, predictable hours.",
-          "Use careful language + a source."
-        ],
-        stems: [
-          "Projections suggest steady hiring, which may increase job stability in ______ settings (SOURCE).",
-          "This field often offers ______, though stability can vary by ______ (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Meaningful” is vague unless you define it.",
+        tips:["Define the kind of meaning: patient care, community health, problem-solving, creativity, etc.", "Connect the definition to evidence or a specific example."],
+        stems:["This work may feel meaningful for people who value ______ because ______ (SOURCE).", "The role contributes to ______ by ______ (SOURCE)."]
       },
       "a smart path": {
-        type: "verdict",
-        title: "“Smart” is a judgment. Replace with specifics.",
-        tips: [
-          "What makes it “smart”? ROI? job availability? transferability of skills?",
-          "Make the reasoning explicit, not implied."
-        ],
-        stems: [
-          "This path may offer a strong return on time/cost because ______ (SOURCE).",
-          "This training leads to ______ skills that can apply to ______ (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Smart” is a judgment. Replace it with specifics.",
+        tips:["Explain what makes it smart: return on cost, job availability, transferability of skills, or long-term stability.", "Make the reasoning explicit, not implied."],
+        stems:["This path may offer a strong return on time and cost because ______ (SOURCE).", "This training leads to ______ skills that can apply to ______ (SOURCE)."]
       },
       "job security": {
-        type: "verdict",
-        title: "“Job security” needs evidence and boundaries.",
-        tips: [
-          "Job security varies by region, setting, and specialization.",
-          "Support with projected growth or unemployment data (SOURCE)."
-        ],
-        stems: [
-          "Projected growth suggests stronger job security than ______, though it varies by ______ (SOURCE).",
-          "Hiring needs may remain steady because ______ (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Job security” needs evidence and boundaries.",
+        tips:["Job security varies by region, setting, and specialization.", "Support it with projected growth, hiring demand, or regional data."],
+        stems:["Projected growth suggests stronger job security than ______, though it varies by ______ (SOURCE).", "Hiring needs may remain steady because ______ (SOURCE)."]
       },
       "make a real difference": {
-        type: "verdict",
-        title: "“Real difference” is vague—name the specific impact.",
-        tips: [
-          "What difference? patient outcomes, access to care, health education, etc.",
-          "Frame carefully: can contribute to, can support, can improve…"
-        ],
-        stems: [
-          "Nurses contribute to ______ by ______, especially in ______ settings (SOURCE).",
-          "This role can improve ______ because ______ (SOURCE)."
-        ]
+        type:"verdict",
+        title:"“Real difference” is vague. Name the specific impact.",
+        tips:["What difference? Patient outcomes, access to care, health education, or community support?", "Frame carefully: can contribute to, can support, can improve."],
+        stems:["Nurses contribute to ______ by ______, especially in ______ settings (SOURCE).", "This role can support ______ because ______ (SOURCE)."]
       }
     };
 
     const practiceItems = [
-      { text: "The BLS projects job growth for nursing, so it is a great career.", key: "B" },
-      { text: "This career requires specific training, which affects time and cost.", key: "A" },
-      { text: "Nursing is rewarding because you help people.", key: "B" },
-      { text: "Many nurses work long shifts, which can affect work-life balance.", key: "A" },
-      { text: "Rocket science is cool for anyone who likes math.", key: "C" },
-      { text: "This career may appeal to people who enjoy science and can handle advanced math requirements.", key: "A" },
-      { text: "Projected growth proves nursing is a stable and smart path.", key: "B" },
-      { text: "People will always need healthcare, so this job will never go away.", key: "C" }
+      { text:"The BLS projects job growth for nursing, so it is a great career.", key:"B" },
+      { text:"This career requires specific training, which affects time and cost.", key:"A" },
+      { text:"Nursing is rewarding because you help people.", key:"B" },
+      { text:"Many nurses work long shifts, which can affect work-life balance.", key:"A" },
+      { text:"Rocket science is cool for anyone who likes math.", key:"C" },
+      { text:"This career may appeal to people who enjoy science and can handle advanced math requirements.", key:"A" },
+      { text:"Projected growth proves nursing is a stable and smart path.", key:"B" },
+      { text:"People will always need healthcare, so this job will never go away.", key:"C" }
     ];
 
-    // ---------- Helpers ----------
     const paraBox = document.getElementById("paraBox");
     const feedback = document.getElementById("feedback");
+    const clickCue = document.getElementById("clickCue");
+    const practiceList = document.getElementById("practiceList");
+    const saveStatus = document.getElementById("saveStatus");
 
     function escapeHtml(str){
-      return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+      return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
+    }
+    function escapeRegExp(str){
+      return String(str).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
-    function setFeedback(title, tips=[], stems=[], type="verdict"){
-      const badge = type === "overclaim" ? `<span class="tag">Overclaim</span>` : `<span class="tag">Verdict</span>`;
-      const tipsList = tips.length ? `<ul>${tips.map(t=>`<li>${escapeHtml(t)}</li>`).join("")}</ul>` : "";
-      const stemsList = stems.length ? `<h4 style="margin-top:10px">Rewrite stems</h4><ul>${stems.map(s=>`<li>${escapeHtml(s)}</li>`).join("")}</ul>` : "";
+    function setDefaultFeedback(){
       feedback.innerHTML = `
-        <h4 style="display:flex;gap:8px;align-items:center;margin:0 0 6px">
-          ${badge} <span>${escapeHtml(title)}</span>
-        </h4>
-        ${tipsList}
-        ${stemsList}
-        <p class="small" style="margin-top:10px">Try clicking other highlights. You’re training your brain to notice these patterns.</p>
+        <span class="tag clay">Notice the pattern</span>
+        <h3>Click a highlighted word or phrase to get rewrite options.</h3>
+        <p class="small">Tip: “Job growth” is a fact. “Great career” is a verdict. A fact does not automatically prove a verdict.</p>
+      `;
+    }
+
+    function setFeedback(data, fallbackPhrase, fallbackType){
+      const type = data.type || fallbackType || "verdict";
+      const tagClass = type === "overclaim" ? "red" : "clay";
+      const label = type === "overclaim" ? "Overclaim" : "Verdict";
+      const tips = (data.tips || []).map(t => `<li>${escapeHtml(t)}</li>`).join("");
+      const stems = (data.stems || []).map(s => `<li>${escapeHtml(s)}</li>`).join("");
+      feedback.innerHTML = `
+        <span class="tag ${tagClass}">${label}</span>
+        <h3>${escapeHtml(data.title || `About “${fallbackPhrase}”`)}</h3>
+        ${tips ? `<ul>${tips}</ul>` : ""}
+        ${stems ? `<h3 style="font-size:1.1rem;margin-top:18px">Rewrite stems</h3><ul>${stems}</ul>` : ""}
+        <p class="small">Try clicking other highlights. You are training your brain to notice these patterns in your own draft.</p>
       `;
     }
 
     function resetParagraph(){
       paraBox.textContent = originalParagraph;
-      feedback.innerHTML = `
-        <h4>Click a highlighted word/phrase to get rewrite options.</h4>
-        <p class="small">Tip: “Job growth” is a fact. “Great career” is a verdict. A fact doesn’t automatically prove a verdict.</p>
-      `;
+      if(clickCue) clickCue.classList.remove("show");
+      setDefaultFeedback();
     }
 
     function highlightParagraph(){
-      const allPhrases = [...new Set([...verdictPhrases, ...overclaimPhrases])].sort((a,b)=>b.length-a.length);
+      const allPhrases = [...new Set([...verdictPhrases, ...overclaimPhrases])].sort((a,b) => b.length - a.length);
       let html = escapeHtml(originalParagraph);
-
       const placeholders = [];
+
       allPhrases.forEach((phrase, idx) => {
         const type = overclaimPhrases.includes(phrase) ? "overclaim" : "verdict";
-        const token = `__HITOKEN_${idx}__`;
+        const token = `__TOKEN_${idx}__`;
         const re = new RegExp(escapeRegExp(phrase), "gi");
-
         if(re.test(originalParagraph)){
-          placeholders.push({ token, phrase, type });
+          placeholders.push({token, phrase, type});
           html = html.replace(re, token);
         }
       });
 
       placeholders.forEach(({token, phrase, type}) => {
-        const span = `<span class="hi" data-phrase="${escapeHtml(phrase)}" data-type="${type}" title="Click for help">${escapeHtml(phrase)}</span>`;
+        const span = `<span class="highlighted" tabindex="0" role="button" data-phrase="${escapeHtml(phrase)}" data-type="${type}" aria-label="Get help with ${escapeHtml(phrase)}">${escapeHtml(phrase)}</span>`;
         html = html.replaceAll(token, span);
       });
 
       paraBox.innerHTML = html;
-
-      paraBox.querySelectorAll(".hi").forEach(el => {
-        el.addEventListener("click", () => {
+      if(clickCue) clickCue.classList.add("show");
+      setDefaultFeedback();
+      paraBox.querySelectorAll(".highlighted").forEach(el => {
+        const activate = () => {
           const phrase = el.getAttribute("data-phrase");
           const type = el.getAttribute("data-type");
           const data = popupContent[phrase] || {
             type,
-            title: `About “${phrase}”`,
-            tips: [
-              "If this is a judgment, define it and prove it.",
-              "If this is too absolute, limit it."
-            ],
-            stems: [
-              "This suggests ______, though ______ also matters (SOURCE).",
-              "This may be a strong option for ______, but it requires ______ (SOURCE)."
-            ]
+            title:`About “${phrase}”`,
+            tips:["If this is a judgment, define it and prove it.", "If this is too absolute, limit it."],
+            stems:["This suggests ______, though ______ also matters (SOURCE).", "This may be a strong option for ______, but it requires ______ (SOURCE)."]
           };
-          setFeedback(data.title, data.tips, data.stems, data.type || type);
+          setFeedback(data, phrase, type);
+        };
+        el.addEventListener("click", activate);
+        el.addEventListener("keydown", event => {
+          if(event.key === "Enter" || event.key === " "){
+            event.preventDefault();
+            activate();
+          }
         });
       });
     }
-
-    function escapeRegExp(s){
-      return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    }
-
-    // ---------- Practice Render ----------
-    const practiceList = document.getElementById("practiceList");
 
     function renderPractice(){
       practiceList.innerHTML = "";
-      practiceItems.forEach((item, i) => {
-        const div = document.createElement("div");
-        div.className = "practiceItem";
-        div.innerHTML = `
-          <div><strong>${i+1}.</strong> ${escapeHtml(item.text)}</div>
-          <div class="row">
-            <span class="tag">Choose: A / B / C</span>
-            <select aria-label="Choose A, B, or C">
-              <option value="">—</option>
-              <option value="A">A (defensible)</option>
-              <option value="B">B (fact → verdict)</option>
-              <option value="C">C (overclaim)</option>
+      practiceItems.forEach((item, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "practice-item";
+        wrapper.innerHTML = `
+          <p><strong>${index + 1}.</strong> ${escapeHtml(item.text)}</p>
+          <div class="practice-controls">
+            <label class="tag" for="practice-${index}">Choose A, B, or C</label>
+            <select id="practice-${index}" data-practice="${index}">
+              <option value="">Choose one</option>
+              <option value="A">A: defensible</option>
+              <option value="B">B: fact to verdict</option>
+              <option value="C">C: overclaim</option>
             </select>
-            <span class="small" data-result></span>
+            <span class="result-text" id="result-${index}" aria-live="polite"></span>
           </div>
         `;
-        const sel = div.querySelector("select");
-        const result = div.querySelector("[data-result]");
-        sel.addEventListener("change", () => {
-          if(!sel.value){ result.textContent = ""; return; }
-          result.textContent = sel.value === item.key ? "✓" : "Not quite";
+        practiceList.appendChild(wrapper);
+      });
+
+      document.querySelectorAll("[data-practice]").forEach(select => {
+        const index = Number(select.getAttribute("data-practice"));
+        const result = document.getElementById(`result-${index}`);
+        const saved = localStorage.getItem(STORAGE_PREFIX + `practice-${index}`);
+        if(saved){select.value = saved; updatePracticeResult(select, result, practiceItems[index].key)}
+        select.addEventListener("change", () => {
+          localStorage.setItem(STORAGE_PREFIX + `practice-${index}`, select.value);
+          updatePracticeResult(select, result, practiceItems[index].key);
+          markSaved();
         });
-        practiceList.appendChild(div);
       });
     }
 
-    // ---------- Buttons ----------
-    document.getElementById("btnHighlight").addEventListener("click", highlightParagraph);
-    document.getElementById("btnReset").addEventListener("click", resetParagraph);
-
-    document.getElementById("btnShowKey").addEventListener("click", () => {
-      document.getElementById("answerKey").style.display = "block";
-    });
-    document.getElementById("btnHideKey").addEventListener("click", () => {
-      document.getElementById("answerKey").style.display = "none";
-    });
-
-    document.getElementById("btnQuickStem").addEventListener("click", () => {
-      const rewrite = document.getElementById("studentRewrite");
-      const stems = [
-        "This career offers ______, but it also requires ______ (SOURCE).",
-        "Projected demand suggests ______, though it does not guarantee ______ (SOURCE).",
-        "This may be a strong option for people who want ______ and can manage ______ (SOURCE).",
-        "According to ______, ______. This suggests ______, but ______ also matters (SOURCE)."
-      ];
-      const pick = stems[Math.floor(Math.random()*stems.length)];
-      rewrite.value = rewrite.value ? (rewrite.value + "\n" + pick) : pick;
-      document.getElementById("rewriteHint").textContent = "Added a stem. Now fill in the blanks with specifics.";
-    });
-
-    document.getElementById("btnCopyRewrite").addEventListener("click", async () => {
-      const txt = document.getElementById("studentRewrite").value.trim();
-      if(!txt){
-        document.getElementById("rewriteHint").textContent = "Nothing to copy yet — write your rewrite first.";
+    function updatePracticeResult(select, result, key){
+      if(!select.value){
+        result.textContent = "";
+        result.classList.remove("wrong");
         return;
       }
-      try{
-        await navigator.clipboard.writeText(txt);
-        document.getElementById("rewriteHint").textContent = "Copied.";
-      }catch(e){
-        document.getElementById("rewriteHint").textContent = "Copy didn’t work in this browser. You can manually select + copy.";
+      if(select.value === key){
+        result.textContent = "Correct";
+        result.classList.remove("wrong");
+      } else {
+        result.textContent = "Not quite. Try again.";
+        result.classList.add("wrong");
       }
-    });
+    }
 
-    // Print button
-    document.getElementById("btnPrint").addEventListener("click", () => window.print());
+    function markSaved(){
+      if(!saveStatus) return;
+      saveStatus.textContent = "Saved in this browser.";
+      window.clearTimeout(markSaved.timer);
+      markSaved.timer = window.setTimeout(() => {
+        saveStatus.textContent = "Your typing autosaves in this browser.";
+      }, 1800);
+    }
 
-    // ---------- Init ----------
-    resetParagraph();
-    renderPractice();
+    function initAutosave(){
+      document.querySelectorAll("[data-save]").forEach(field => {
+        const key = STORAGE_PREFIX + field.id;
+        const saved = localStorage.getItem(key);
+        if(saved !== null) field.value = saved;
+        field.addEventListener("input", () => {
+          localStorage.setItem(key, field.value);
+          markSaved();
+        });
+      });
 
-    // Optional: auto-fill date with today's local date if the field is empty
-    (function autofillDate(){
+      document.querySelectorAll("[data-save-check]").forEach(box => {
+        const key = STORAGE_PREFIX + box.getAttribute("data-save-check");
+        const saved = localStorage.getItem(key);
+        if(saved !== null) box.checked = saved === "true";
+        box.addEventListener("change", () => {
+          localStorage.setItem(key, String(box.checked));
+          markSaved();
+        });
+      });
+    }
+
+    function autofillDate(){
       const dateInput = document.getElementById("studentDate");
       if(dateInput && !dateInput.value){
         const d = new Date();
-        const opts = { year: "numeric", month: "long", day: "numeric" };
-        dateInput.value = d.toLocaleDateString(undefined, opts);
+        dateInput.value = d.toLocaleDateString(undefined, {year:"numeric", month:"long", day:"numeric"});
+        localStorage.setItem(STORAGE_PREFIX + "studentDate", dateInput.value);
       }
-    })();
+    }
+
+    document.getElementById("btnHighlight").addEventListener("click", highlightParagraph);
+    document.getElementById("btnReset").addEventListener("click", resetParagraph);
+
+    resetParagraph();
+    renderPractice();
+    initAutosave();
+    autofillDate();
   </script>
 </body>
 </html>
