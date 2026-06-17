@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Objective Voice Toolkit: Defensible Claims</title>
+  <style>
+    :root{
+      --paper:#eef4ed;
+      --paper-2:#f8fbf7;
+      --ink:#14231b;
+      --muted:#4d5b53;
+      --line:#c9d8cc;
+      --card:#ffffff;
+      --green:#064e3b;
+      --green-2:#0b6b4f;
+      --green-soft:#dfeee6;
+      --gold:#f2c94c;
+      --gold-soft:#fff5cf;
+      --rose-soft:#f8ded6;
+      --red:#9d2c1f;
+      --shadow:0 18px 45px rgba(6, 78, 59, .14);
+      --shadow-soft:0 8px 24px rgba(6, 78, 59, .10);
+      --radius:22px;
+      --radius-sm:14px;
+      --focus:#f2c94c;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(242,201,76,.20), transparent 28rem),
+        radial-gradient(circle at 85% 12%, rgba(11,107,79,.25), transparent 24rem),
+        linear-gradient(180deg, #f4f8f2 0%, var(--paper) 45%, #e9f2eb 100%);
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:18px;
+      line-height:1.58;
+    }
+
+    a{color:var(--green)}
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+      outline:4px solid rgba(242,201,76,.55);
+      outline-offset:3px;
+    }
+
+    .skip-link{
+      position:absolute;
+      top:-100px;
+      left:18px;
+      background:var(--green);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:12px;
+      z-index:50;
+    }
+    .skip-link:focus{top:18px}
+
+    .page-shell{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+      padding:28px 0 64px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:32px;
+      padding:40px;
+      background:
+        linear-gradient(135deg, rgba(6,78,59,.98), rgba(11,107,79,.94));
+      color:#ffffff;
+      box-shadow:var(--shadow);
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      top:-80px;
+      width:280px;
+      height:280px;
+      border-radius:999px;
+      background:rgba(242,201,76,.20);
+      border:1px solid rgba(255,255,255,.16);
+    }
+    .eyebrow{
+      position:relative;
+      z-index:1;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      margin:0 0 18px;
+      padding:7px 12px;
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      color:#fff5cf;
+      font-size:.78rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+    h1, h2, h3{
+      font-family:Georgia, 'Times New Roman', serif;
+      line-height:1.08;
+      font-weight:500;
+    }
+    h1{
+      position:relative;
+      z-index:1;
+      max-width:820px;
+      margin:0;
+      font-size:clamp(2.4rem, 6vw, 5.6rem);
+      letter-spacing:-.055em;
+    }
+    .hero p{
+      position:relative;
+      z-index:1;
+      max-width:760px;
+      margin:18px 0 0;
+      color:#edf7f1;
+      font-size:1.12rem;
+    }
+    .hero-actions{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:26px;
+    }
+
+    .tool-bar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      margin:18px 0 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 14px;
+      border:1px solid rgba(222,208,189,.82);
+      border-radius:999px;
+      background:rgba(251,247,239,.88);
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow-soft);
+    }
+    .status-line{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color:var(--muted);
+      font-size:.92rem;
+      min-width:0;
+    }
+    .status-dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:var(--green-2);
+      box-shadow:0 0 0 5px rgba(11,107,79,.20);
+      flex:0 0 auto;
+    }
+    .status-text{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+    button, .button-link{
+      appearance:none;
+      border:1px solid var(--green);
+      background:var(--green);
+      color:#ffffff;
+      border-radius:999px;
+      padding:10px 15px;
+      font:700 .9rem Arial, Helvetica, sans-serif;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    button:hover, .button-link:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 18px rgba(6,78,59,.14);
+      background:var(--green-2);
+      color:#ffffff;
+    }
+    button.primary, .button-link.primary{
+      background:var(--green);
+      color:#ffffff;
+      border-color:var(--green);
+    }
+    button.secondary-dark{
+      background:rgba(255,255,255,.10);
+      color:#ffffff;
+      border-color:rgba(255,255,255,.24);
+    }
+
+    .layout{
+      display:block;
+    }
+    .side-nav{
+      position:sticky;
+      top:88px;
+      border:1px solid rgba(6,78,59,.20);
+      border-radius:28px;
+      padding:20px;
+      background:
+        linear-gradient(180deg, rgba(255,250,242,.95), rgba(248,237,219,.92));
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
+    }
+    .side-nav:before{
+      content:"";
+      display:block;
+      width:52px;
+      height:5px;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--green-2), var(--gold));
+      margin:0 0 14px;
+    }
+    .side-nav h2{
+      margin:0 0 14px;
+      font-size:1.35rem;
+      letter-spacing:-.035em;
+    }
+    .side-nav a{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:9px;
+      align-items:center;
+      padding:10px 11px;
+      border-radius:14px;
+      color:var(--ink);
+      text-decoration:none;
+      font-size:.94rem;
+      border:1px solid transparent;
+    }
+    .side-nav a:before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--gold);
+      opacity:.65;
+    }
+    .side-nav a:hover{
+      background:var(--green-soft);
+      border-color:rgba(11,107,79,.45);
+    }
+
+    main{min-width:0}
+    .section-card{
+      margin:0 0 24px;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(255,250,242,.88);
+      box-shadow:var(--shadow-soft);
+    }
+    .section-card.dark{
+      background:linear-gradient(135deg, var(--green), var(--green-2));
+      color:#ffffff;
+      border-color:rgba(255,255,255,.12);
+    }
+    .section-card.dark p, .section-card.dark .small{color:#edf7f1}
+    .section-card h2{
+      margin:0 0 10px;
+      font-size:clamp(1.75rem, 3vw, 2.65rem);
+      letter-spacing:-.045em;
+    }
+    .section-card h3{
+      margin:24px 0 10px;
+      font-size:1.35rem;
+      letter-spacing:-.025em;
+    }
+    .section-intro{
+      max-width:760px;
+      color:var(--muted);
+      margin:0 0 20px;
+    }
+    .small{font-size:.93rem;color:var(--muted)}
+    .mini-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin:0 0 8px;
+      color:var(--green);
+      font-size:.78rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-weight:800;
+    }
+
+    .two{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .three{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+    }
+    .field-group{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+      margin-top:12px;
+    }
+    label{
+      font-weight:700;
+      color:var(--ink);
+      font-size:.92rem;
+    }
+    input[type="text"], textarea, select{
+      width:100%;
+      border:1px solid #b8cbbd;
+      border-radius:16px;
+      padding:12px 13px;
+      background:#ffffff;
+      color:var(--ink);
+      font:1rem Arial, Helvetica, sans-serif;
+      line-height:1.45;
+    }
+    textarea{min-height:132px;resize:vertical}
+    input[type="checkbox"]{width:1.05rem;height:1.05rem;accent-color:var(--green-2)}
+
+    .instruction-box{
+      border:1px solid rgba(6,78,59,.26);
+      background:linear-gradient(180deg, #f8fbf7, #eaf4ed);
+      border-radius:20px;
+      padding:16px;
+      color:var(--green);
+    }
+    .instruction-box ol, .instruction-box ul{margin:8px 0 0 22px; padding:0}
+    .instruction-box li{margin:5px 0}
+
+    .sample-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap:18px;
+      align-items:start;
+    }
+    .paragraph-box{
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      background:#ffffff;
+      font-size:1.06rem;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);
+      white-space:pre-wrap;
+    }
+    .help-panel{
+      border:1px solid rgba(11,107,79,.55);
+      border-radius:22px;
+      padding:18px;
+      background:linear-gradient(180deg, #f8fbf7, #e6f1eb);
+    }
+    .click-cue{
+      display:none;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:16px;
+      background:var(--gold-soft);
+      border:1px solid rgba(242,201,76,.55);
+      color:#594019;
+      font-weight:800;
+      font-size:.94rem;
+    }
+    .click-cue.show{display:block;}
+    .help-panel h3, .drawer h3{margin-top:0}
+    .highlighted{
+      display:inline;
+      padding:2px 5px;
+      margin:0 1px;
+      border-radius:8px;
+      border:1px solid rgba(242,201,76,.82);
+      background:rgba(245,231,199,.92);
+      cursor:pointer;
+      color:#3f2a16;
+      font-weight:700;
+    }
+    .highlighted[data-type="overclaim"]{
+      border-color:rgba(157,44,31,.35);
+      background:var(--rose-soft);
+      color:var(--red);
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      border:1px solid rgba(102,95,99,.18);
+      border-radius:999px;
+      padding:4px 9px;
+      background:#ffffff;
+      color:var(--muted);
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+    .tag.clay{color:var(--green); border-color:rgba(6,78,59,.25); background:#edf7f1}
+    .tag.red{color:var(--red); border-color:rgba(157,44,31,.25); background:#fff0ed}
+
+    .word-cloud{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+    .word-card{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 12px;
+      background:#ffffff;
+      color:var(--ink);
+      font-size:.92rem;
+    }
+
+    .stem-list{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+      margin-top:18px;
+    }
+    .stem{
+      position:relative;
+      border:1px solid rgba(242,201,76,.45);
+      border-radius:20px;
+      padding:18px 18px 18px 20px;
+      background:linear-gradient(180deg, #ffffff, #f2f8f4);
+      box-shadow:0 10px 22px rgba(62,39,35,.07);
+    }
+    .stem strong{
+      display:block;
+      margin-bottom:7px;
+      color:var(--green);
+      font-size:.82rem;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+    }
+    .stem.feature{
+      grid-column:1 / -1;
+      display:grid;
+      grid-template-columns:minmax(0, .75fr) minmax(0, 1.25fr);
+      gap:18px;
+      align-items:center;
+      background:linear-gradient(135deg, #f8fbf7, #eaf4ed);
+      border-color:rgba(6,78,59,.28);
+    }
+    .stem-phrase{
+      font-family:Georgia, 'Times New Roman', serif;
+      font-size:clamp(1.5rem, 3vw, 2.45rem);
+      line-height:1;
+      letter-spacing:-.04em;
+      color:var(--green);
+    }
+
+    .practice-item{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+      background:#ffffff;
+      margin-top:14px;
+    }
+    .practice-item p{margin:0 0 10px}
+    .practice-controls{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+    }
+    .result-text{font-weight:800; color:#3f6f39}
+    .result-text.wrong{color:var(--red)}
+    details.answer-key{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#ffffff;
+      padding:10px 14px;
+    }
+    summary{cursor:pointer;font-weight:800;color:var(--green)}
+
+    .checklist{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+    .checklist label{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:10px;
+      align-items:start;
+      padding:12px 13px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#ffffff;
+      font-weight:500;
+    }
+
+    .print-only{display:none}
+    .screen-note{
+      margin-top:20px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:var(--green-soft);
+      border:1px solid rgba(11,107,79,.5);
+      color:#384534;
+      font-size:.95rem;
+    }
+
+
+
+    .hub-card{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:center;
+      margin-bottom:18px;
+      padding:18px 20px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:rgba(255,255,255,.94);
+      box-shadow:var(--shadow-soft);
+    }
+    .hub-card h2{
+      margin:0 0 4px;
+      font-size:1.45rem;
+      letter-spacing:-.03em;
+    }
+    .hub-card p{margin:0;color:var(--muted);font-size:.96rem}
+    .hub-card.compact{justify-content:flex-end}
+    .hub-card.bottom-save{justify-content:center;margin-top:26px;margin-bottom:0}
+    .top-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+    .button-link.light, button.light{
+      background:#ffffff;
+      color:var(--green);
+      border-color:var(--green);
+    }
+    .button-link.light:hover, button.light:hover{background:var(--green-soft);color:var(--green)}
+
+    .save-modal{
+      position:fixed;
+      inset:0;
+      z-index:100;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
+      background:rgba(8,28,21,.72);
+    }
+    .save-modal.show{display:flex}
+    .save-modal-card{
+      width:min(720px, 100%);
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.22);
+      background:#ffffff;
+      color:var(--ink);
+      padding:30px;
+      box-shadow:0 25px 80px rgba(0,0,0,.28);
+    }
+    .save-modal-card h2{margin:0 0 12px;font-size:2rem;color:var(--green)}
+    .save-modal-card p{margin:0 0 14px}
+    .save-modal-card ol{margin:10px 0 0 22px;padding:0}
+    .save-modal-card li{margin:8px 0}
+    .modal-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+
+    .print-value{display:none}
+
+    @media (max-width: 940px){
+      .hub-card{align-items:flex-start;flex-direction:column}
+      .top-actions{justify-content:flex-start}
+      .layout{grid-template-columns:1fr}
+      .side-nav{position:relative; top:auto}
+      .side-nav nav{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:4px}
+      .sample-grid, .two, .three, .stem-list, .stem.feature{grid-template-columns:1fr}
+      .tool-bar{border-radius:22px; align-items:flex-start; flex-direction:column}
+      .hero{padding:30px 24px}
+    }
+    @media (max-width: 560px){
+      .page-shell{width:min(100% - 22px, 1180px); padding-top:14px}
+      .section-card{padding:22px 18px}
+      .side-nav nav{grid-template-columns:1fr}
+      .status-text{white-space:normal}
+    }
+
+    @media print{
+      @page{margin:.55in}
+      body{background:#fff !important; color:#000; font-size:12pt; line-height:1.35}
+      .skip-link, .hero, .tool-bar, .side-nav, .screen-note, .hero-actions, button, .button-link, .no-print, .hub-card, .save-modal, .help-panel, .click-cue, .instruction-box, #sample, #watch, #fix, #student-info, details.answer-key{display:none !important}
+      .page-shell{width:100%; padding:0; margin:0}
+      .layout{display:block}
+      main:before{
+        content:"Objective Voice Toolkit: Defensible Claims — Student Work for Grading";
+        display:block;
+        font-family:Georgia, 'Times New Roman', serif;
+        font-size:18pt;
+        font-weight:700;
+        margin:0 0 14px;
+        border-bottom:2px solid #000;
+        padding-bottom:8px;
+      }
+      .section-card, .section-card.dark{
+        box-shadow:none !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:#fff !important;
+        color:#000 !important;
+        margin:0 0 16px !important;
+        padding:0 !important;
+        page-break-inside:auto;
+      }
+      .section-card.dark p, .section-card.dark .small{color:#000 !important}
+      .section-card h2{font-size:15pt;margin:0 0 8px;border-bottom:1px solid #000;padding-bottom:3px}
+      .section-card h3{font-size:13pt;margin:14px 0 5px}
+      .mini-label, .section-intro, .small{display:none !important}
+      .print-only{display:block}
+      .sample-grid, .two, .three{display:block}
+      .field-group{break-inside:avoid;margin:0 0 10px}
+      label{font-size:11pt;display:block;margin:0 0 3px;color:#000}
+      input[type="text"], textarea, select{display:none !important}
+      .print-value{
+        display:block !important;
+        min-height:22px;
+        border:1px solid #000;
+        padding:6px 8px;
+        margin:0 0 8px;
+        white-space:pre-wrap;
+        overflow:visible;
+        page-break-inside:auto;
+      }
+      .print-value:empty::after{content:"Not answered"; color:#555; font-style:italic}
+      .practice-item{
+        border:1px solid #000 !important;
+        border-radius:0 !important;
+        background:#fff !important;
+        padding:8px !important;
+        margin:0 0 8px !important;
+        break-inside:avoid;
+      }
+      .practice-controls .tag, .result-text{display:none !important}
+      .checklist{display:block}
+      .checklist label{
+        border:0 !important;
+        background:#fff !important;
+        padding:0 !important;
+        display:block;
+        margin:0 0 4px;
+      }
+      .checklist input{display:none !important}
+      .checklist input + span::before{content:"☐ ";font-weight:700}
+      .checklist input:checked + span::before{content:"☑ ";font-weight:700}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="page-shell">
+    <section class="hub-card compact" aria-label="Toolkit workpage saving options">
+      <div class="top-actions">
+        <button class="primary" type="button" onclick="window.print()">Save Finished Work as PDF</button>
+        <button class="primary" type="button" id="saveUnfinishedTop">Save Unfinished Work for Later</button>
+        <button class="light" type="button" id="restoreSavedTop">Restore Saved Work</button>
+        <a class="button-link light" href="https://engl101practicepages.github.io/AssignmentWorkHub/">Return to Toolkit Work Hub</a>
+      </div>
+    </section>
+
+    <header class="hero">
+      <p class="eyebrow">ENG 101 Writing Practice</p>
+      <h1>Objective Voice Toolkit: Defensible Claims</h1>
+      <p>This page helps you find places where a draft jumps from a source fact to an overconfident conclusion. You will practice replacing vague verdict words with specific, careful, evidence-based claims.</p>
+      <div class="hero-actions">
+        <a class="button-link secondary-dark" href="#sample">Practice with the sample</a>
+        <a class="button-link secondary-dark" href="#rewrite">Go to student response boxes</a>
+      </div>
+    </header>
+
+
+    <div class="layout">
+      <main id="main">
+        <section class="section-card" id="sample">
+          <p class="mini-label">Step 1</p>
+          <h2>Sample paragraph: verdicts and overconfident conclusions</h2>
+          <p class="section-intro">The paragraph below sounds confident, but it uses broad judgment words that need more proof. Click the button to highlight the words and phrases that need careful revision.</p>
+
+          <div class="sample-grid">
+            <div>
+              <div class="paragraph-box" id="paraBox" aria-live="polite"></div>
+              <div class="click-cue" id="clickCue">Now click any highlighted word or phrase to see what is wrong with it and how to revise it.</div>
+              <div class="hero-actions no-print" style="margin-top:14px">
+                <button class="primary" id="btnHighlight" type="button">Highlight verdict words</button>
+                <button id="btnReset" type="button">Reset paragraph</button>
+              </div>
+            </div>
+            <aside class="help-panel" id="feedback" aria-live="polite"></aside>
+          </div>
+
+          <div class="instruction-box" style="margin-top:18px">
+            <strong>Plain language rule:</strong> A source fact does not automatically prove a verdict. If you use a word like <em>great</em>, <em>rewarding</em>, <em>best</em>, or <em>worth it</em>, you need to define it, measure it, or limit it.
+          </div>
+        </section>
+
+        <section class="section-card dark" id="watch">
+          <p class="mini-label" style="color:#fff5cf">Step 2</p>
+          <h2>Verdict words to watch</h2>
+          <p class="section-intro">These words are not banned. They just need proof, definition, or a more precise replacement.</p>
+
+          <h3>Judgment words</h3>
+          <div class="word-cloud" aria-label="Verdict words">
+            <span class="word-card">great</span>
+            <span class="word-card">rewarding</span>
+            <span class="word-card">worth it</span>
+            <span class="word-card">better / best</span>
+            <span class="word-card">meaningful</span>
+            <span class="word-card">interesting</span>
+            <span class="word-card">important</span>
+            <span class="word-card">cool</span>
+            <span class="word-card">smart</span>
+          </div>
+
+          <h3>Overclaim words</h3>
+          <div class="word-cloud" aria-label="Overclaim words">
+            <span class="word-card">always</span>
+            <span class="word-card">never</span>
+            <span class="word-card">anyone</span>
+            <span class="word-card">everyone</span>
+            <span class="word-card">proves</span>
+            <span class="word-card">shows, when you mean suggests</span>
+          </div>
+        </section>
+
+        <section class="section-card" id="fix">
+          <p class="mini-label">Step 3</p>
+          <h2>Fix the fact to verdict leap</h2>
+          <p class="section-intro">Use these stems when you feel yourself trying to jump from a fact to a vibe. The goal is not to make your writing less confident. The goal is to make the confidence easier to prove.</p>
+
+          <div class="stem-list">
+            <div class="stem feature">
+              <div class="stem-phrase">fact → verdict</div>
+              <div>
+                <strong>Main move</strong>
+                A source fact can support your idea, but it cannot do all the thinking for you. Add the reason, the limit, or the tradeoff so the reader can see how your evidence connects to your claim.
+              </div>
+            </div>
+            <div class="stem"><strong>Instead of “great”</strong>Try: “offers strong demand, though it requires...”</div>
+            <div class="stem"><strong>Instead of “rewarding”</strong>Try: “some workers report satisfaction because..., though...”</div>
+            <div class="stem"><strong>Instead of “best way”</strong>Try: “one effective way is...”</div>
+            <div class="stem"><strong>Instead of “proves”</strong>Try: “suggests,” “indicates,” or “points to.”</div>
+            <div class="stem"><strong>Instead of “always” or “anyone”</strong>Try: “often,” “many,” “some,” “in some settings,” or “for students who...”</div>
+          </div>
+
+          <div class="instruction-box" style="margin-top:18px">
+            <strong>Quick upgrade move:</strong> When you want to say “great,” force yourself to name two tradeoffs. Try this sentence shape: “This career offers ___, but it also requires ___.”
+          </div>
+        </section>
+
+        <section class="section-card" id="practice">
+          <p class="mini-label">Step 4</p>
+          <h2>Practice set: what kind of sentence is this?</h2>
+          <p class="section-intro">Label each sentence. A means defensible claim. B means fact to verdict leap. C means overclaim.</p>
+
+          <div class="instruction-box">
+            <strong>Use these choices:</strong>
+            <ul>
+              <li>A: defensible claim, because it is specific, measurable, or careful</li>
+              <li>B: fact to verdict leap, because it needs proof or definition</li>
+              <li>C: overclaim, because the language is too broad</li>
+            </ul>
+          </div>
+
+          <div id="practiceList"></div>
+
+          <details class="answer-key">
+            <summary>Show answer key</summary>
+            <ol>
+              <li>B: job growth does not automatically prove “great.”</li>
+              <li>A: specific consequence without a verdict.</li>
+              <li>B: “rewarding” is a verdict without evidence.</li>
+              <li>A: describes a condition without overclaiming.</li>
+              <li>C: “anyone” overclaim and “cool” is vague.</li>
+              <li>A: limited to a type of person and specific requirements.</li>
+              <li>B: “stable and smart” are judgments that need evidence and definition.</li>
+              <li>C: “always” and “never” are too absolute.</li>
+            </ol>
+          </details>
+        </section>
+
+        <section class="section-card" id="rewrite">
+          <p class="mini-label">Step 5</p>
+          <h2>Rewrite one sentence from your draft</h2>
+          <p class="section-intro">Pick one sentence from your draft essay that includes a verdict word. Rewrite it so the claim becomes specific, careful, and easier to support with evidence.</p>
+
+          <div class="two">
+            <div class="field-group">
+              <label for="studentOriginal">Sentence I am revising</label>
+              <textarea id="studentOriginal" placeholder="Paste one sentence from your essay here. Look for words like great, rewarding, worth it, better, proves." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="studentRewrite">My revised defensible claim</label>
+              <textarea id="studentRewrite" placeholder="Rewrite it here. Try: This career offers ___, but it also requires ___ (SOURCE)." data-save></textarea>
+              <p class="small">Use evidence language like “suggests” or “indicates” instead of “proves.”</p>
+            </div>
+          </div>
+
+          <h3>Make “great” measurable</h3>
+          <p class="section-intro">Find one sentence in your own draft where you use the word “great.” If you do not use that exact word, choose a sentence where you make a similar judgment, such as “good,” “best,” “smart,” “rewarding,” or “worth it.”</p>
+          <div class="two">
+            <div class="field-group">
+              <label for="greatSentenceBox">My sentence that uses “great” or a similar judgment word</label>
+              <textarea id="greatSentenceBox" placeholder="Paste the sentence from your own draft here." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="meaningBox">What I actually mean by “great”</label>
+              <textarea id="meaningBox" placeholder="Example: By “great,” I mean stable employment, strong pay, flexible settings, or useful transfer options." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="tradeoffBox">One tradeoff I should mention</label>
+              <textarea id="tradeoffBox" placeholder="Example: However, the training takes ___ years and costs ___, which may limit access." data-save></textarea>
+            </div>
+            <div class="field-group">
+              <label for="greatRewriteBox">My revised sentence without the vague version of “great”</label>
+              <textarea id="greatRewriteBox" placeholder="Example: This career may offer stable employment and flexible work settings, but the training requires ___ and ___ (SOURCE)." data-save></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="check">
+          <p class="mini-label">Step 6</p>
+          <h2>Self-check before you submit</h2>
+          <p class="section-intro">Use this list before you save the page as a PDF.</p>
+
+          <div class="checklist">
+            <label><input type="checkbox" data-save-check="check2"> <span>I found at least 3 verdict or overclaim words in the sample paragraph.</span></label>
+            <label><input type="checkbox" data-save-check="check3"> <span>I rewrote at least 1 sentence so it became specific and defensible.</span></label>
+            <label><input type="checkbox" data-save-check="check4"> <span>I avoided absolute words like “always” or “anyone,” or I limited the claim.</span></label>
+            <label><input type="checkbox" data-save-check="check5"> <span>I used careful research language like “suggests” or “indicates” instead of “proves.”</span></label>
+            <label><input type="checkbox" data-save-check="check6"> <span>If I made a judgment, I defined what I meant and backed it with evidence.</span></label>
+            <label><input type="checkbox" data-save-check="check7"> <span>I saved this page as a PDF and uploaded it to Canvas.</span></label>
+          </div>
+
+          <p class="screen-note">Reminder: unfinished work should be copied into your own Google Doc. Finished PDFs are submitted in Canvas.</p>
+        </section>
+
+      </main>
+    </div>
+
+    <section class="hub-card compact bottom-save" aria-label="Finished and unfinished work saving options">
+      <div class="top-actions">
+        <button class="primary" type="button" onclick="window.print()">Save Finished Work as PDF</button>
+        <button class="primary" type="button" id="saveUnfinishedBottom">Save Unfinished Work for Later</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="save-modal" id="saveModal" role="dialog" aria-modal="true" aria-labelledby="saveModalTitle">
+    <div class="save-modal-card">
+      <h2 id="saveModalTitle">Your unfinished work has been copied</h2>
+      <p>Paste the copied text into your own Google Doc if you are not finished.</p>
+      <ol>
+        <li>Your typed work has been copied.</li>
+        <li>Open your Google Doc and paste the copied work there.</li>
+        <li>Use the Toolkit Work Hub to open or save your Google Doc link.</li>
+      </ol>
+      <div class="modal-actions">
+        <a class="button-link primary" href="https://engl101practicepages.github.io/AssignmentWorkHub/">Go to Toolkit Work Hub</a>
+        <button class="light" type="button" id="stayOnPage">Stay on this page</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_PREFIX = "objective-voice-defensible-claims-v2:";
+
+    const originalParagraph = `Becoming a registered nurse is a great career choice because there will always be people who need medical care, and nurses are in demand. The Bureau of Labor Statistics explains that nursing jobs are projected to grow, which proves it is a stable job and a smart path for the future. Nursing is also a rewarding career because you get to help people every day and make a real difference.
+Even though the training can be challenging, it is worth it because nurses make good money and can work in many different settings like hospitals, schools, or clinics. Overall, nursing is a better option than a lot of other careers because it has job security, good pay, and it is meaningful work.`;
+
+    const verdictPhrases = [
+      "a great career choice",
+      "great career",
+      "proves",
+      "stable job",
+      "a smart path",
+      "rewarding career",
+      "make a real difference",
+      "worth it",
+      "good money",
+      "a better option",
+      "job security",
+      "meaningful work",
+      "in demand"
+    ];
+
+    const overclaimPhrases = ["will always", "always", "proves"];
+
+    const popupContent = {
+      "a great career choice": {
+        type:"verdict",
+        title:"“Great career choice” is a verdict, not a fact.",
+        tips:["Define what “great” means here: pay, schedule, job satisfaction, or job stability.", "Replace the verdict with something measurable.", "Add at least one tradeoff."],
+        stems:["This career offers ______, though it also requires ______ (SOURCE).", "Projected demand suggests ______, but factors like ______ and ______ affect whether it is a good fit (SOURCE)."]
+      },
+      "rewarding career": {
+        type:"verdict",
+        title:"“Rewarding” is a feeling. In academic writing, it needs evidence or a careful frame.",
+        tips:["Limit the claim: rewarding for who?", "Use evidence such as surveys, retention, burnout research, or interviews.", "Add a complication: rewarding, but demanding."],
+        stems:["Some nurses report job satisfaction because ______, though ______ can affect that experience (SOURCE).", "This work involves ______, which may feel meaningful for people who value ______ (SOURCE)."]
+      },
+      "worth it": {
+        type:"verdict",
+        title:"“Worth it” depends on what you are comparing.",
+        tips:["Name the costs: years of training, tuition, workload.", "Name the payoff: wages, stability, mobility, benefits.", "Avoid making the claim sound true for everyone."],
+        stems:["This path requires ______, but it may offer ______ depending on ______ (SOURCE).", "Whether it is “worth it” depends on ______, including ______ and ______ (SOURCE)."]
+      },
+      "will always": {
+        type:"overclaim",
+        title:"“Always” is usually too absolute.",
+        tips:["Replace with careful language: often, typically, in many settings.", "Limit the scope: in the U.S., in hospitals, in rural areas, etc."],
+        stems:["There will likely continue to be a need for ______, especially ______ (SOURCE).", "Healthcare demand often remains high because ______ (SOURCE)."]
+      },
+      "always": {
+        type:"overclaim",
+        title:"“Always” is usually too absolute.",
+        tips:["Replace with often, usually, many, some, or in many settings.", "Name the situation where your claim applies."],
+        stems:["This is often true in ______ settings because ______ (SOURCE).", "Many ______ experience ______, but this can vary by ______ (SOURCE)."]
+      },
+      "proves": {
+        type:"overclaim",
+        title:"“Proves” is too strong for most research writing.",
+        tips:["Use suggests, indicates, points to, or supports the idea that.", "Then explain what the evidence does not show."],
+        stems:["This suggests ______, though it does not guarantee ______ (SOURCE).", "This indicates ______, but other factors like ______ still matter (SOURCE)."]
+      },
+      "a better option": {
+        type:"verdict",
+        title:"“Better” requires a comparison standard.",
+        tips:["Name what you are comparing it to.", "Name the category: pay, schedule, stability, training time, or cost.", "Limit it to a specific student or career goal."],
+        stems:["Compared to ______, this career offers ______, though it also requires ______ (SOURCE).", "This may be a strong option for people who want ______ and can manage ______ (SOURCE)."]
+      },
+      "meaningful work": {
+        type:"verdict",
+        title:"“Meaningful” is vague unless you define it.",
+        tips:["Define the kind of meaning: patient care, community health, problem-solving, creativity, etc.", "Connect the definition to evidence or a specific example."],
+        stems:["This work may feel meaningful for people who value ______ because ______ (SOURCE).", "The role contributes to ______ by ______ (SOURCE)."]
+      },
+      "a smart path": {
+        type:"verdict",
+        title:"“Smart” is a judgment. Replace it with specifics.",
+        tips:["Explain what makes it smart: return on cost, job availability, transferability of skills, or long-term stability.", "Make the reasoning explicit, not implied."],
+        stems:["This path may offer a strong return on time and cost because ______ (SOURCE).", "This training leads to ______ skills that can apply to ______ (SOURCE)."]
+      },
+      "job security": {
+        type:"verdict",
+        title:"“Job security” needs evidence and boundaries.",
+        tips:["Job security varies by region, setting, and specialization.", "Support it with projected growth, hiring demand, or regional data."],
+        stems:["Projected growth suggests stronger job security than ______, though it varies by ______ (SOURCE).", "Hiring needs may remain steady because ______ (SOURCE)."]
+      },
+      "make a real difference": {
+        type:"verdict",
+        title:"“Real difference” is vague. Name the specific impact.",
+        tips:["What difference? Patient outcomes, access to care, health education, or community support?", "Frame carefully: can contribute to, can support, can improve."],
+        stems:["Nurses contribute to ______ by ______, especially in ______ settings (SOURCE).", "This role can support ______ because ______ (SOURCE)."]
+      }
+    };
+
+    const practiceItems = [
+      { text:"The BLS projects job growth for nursing, so it is a great career.", key:"B" },
+      { text:"This career requires specific training, which affects time and cost.", key:"A" },
+      { text:"Nursing is rewarding because you help people.", key:"B" },
+      { text:"Many nurses work long shifts, which can affect work-life balance.", key:"A" },
+      { text:"Rocket science is cool for anyone who likes math.", key:"C" },
+      { text:"This career may appeal to people who enjoy science and can handle advanced math requirements.", key:"A" },
+      { text:"Projected growth proves nursing is a stable and smart path.", key:"B" },
+      { text:"People will always need healthcare, so this job will never go away.", key:"C" }
+    ];
+
+    const paraBox = document.getElementById("paraBox");
+    const feedback = document.getElementById("feedback");
+    const clickCue = document.getElementById("clickCue");
+    const practiceList = document.getElementById("practiceList");
+    const saveStatus = document.getElementById("saveStatus");
+    const HUB_URL = "https://engl101practicepages.github.io/AssignmentWorkHub/";
+    const saveModal = document.getElementById("saveModal");
+
+    function escapeHtml(str){
+      return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
+    }
+    function escapeRegExp(str){
+      return String(str).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function setDefaultFeedback(){
+      feedback.innerHTML = `
+        <span class="tag clay">Notice the pattern</span>
+        <h3>Click a highlighted word or phrase to get rewrite options.</h3>
+        <p class="small">Tip: “Job growth” is a fact. “Great career” is a verdict. A fact does not automatically prove a verdict.</p>
+      `;
+    }
+
+    function setFeedback(data, fallbackPhrase, fallbackType){
+      const type = data.type || fallbackType || "verdict";
+      const tagClass = type === "overclaim" ? "red" : "clay";
+      const label = type === "overclaim" ? "Overclaim" : "Verdict";
+      const tips = (data.tips || []).map(t => `<li>${escapeHtml(t)}</li>`).join("");
+      const stems = (data.stems || []).map(s => `<li>${escapeHtml(s)}</li>`).join("");
+      feedback.innerHTML = `
+        <span class="tag ${tagClass}">${label}</span>
+        <h3>${escapeHtml(data.title || `About “${fallbackPhrase}”`)}</h3>
+        ${tips ? `<ul>${tips}</ul>` : ""}
+        ${stems ? `<h3 style="font-size:1.1rem;margin-top:18px">Rewrite stems</h3><ul>${stems}</ul>` : ""}
+        <p class="small">Try clicking other highlights. You are training your brain to notice these patterns in your own draft.</p>
+      `;
+    }
+
+    function resetParagraph(){
+      paraBox.textContent = originalParagraph;
+      if(clickCue) clickCue.classList.remove("show");
+      setDefaultFeedback();
+    }
+
+    function highlightParagraph(){
+      const allPhrases = [...new Set([...verdictPhrases, ...overclaimPhrases])].sort((a,b) => b.length - a.length);
+      let html = escapeHtml(originalParagraph);
+      const placeholders = [];
+
+      allPhrases.forEach((phrase, idx) => {
+        const type = overclaimPhrases.includes(phrase) ? "overclaim" : "verdict";
+        const token = `__TOKEN_${idx}__`;
+        const re = new RegExp(escapeRegExp(phrase), "gi");
+        if(re.test(originalParagraph)){
+          placeholders.push({token, phrase, type});
+          html = html.replace(re, token);
+        }
+      });
+
+      placeholders.forEach(({token, phrase, type}) => {
+        const span = `<span class="highlighted" tabindex="0" role="button" data-phrase="${escapeHtml(phrase)}" data-type="${type}" aria-label="Get help with ${escapeHtml(phrase)}">${escapeHtml(phrase)}</span>`;
+        html = html.replaceAll(token, span);
+      });
+
+      paraBox.innerHTML = html;
+      if(clickCue) clickCue.classList.add("show");
+      setDefaultFeedback();
+      paraBox.querySelectorAll(".highlighted").forEach(el => {
+        const activate = () => {
+          const phrase = el.getAttribute("data-phrase");
+          const type = el.getAttribute("data-type");
+          const data = popupContent[phrase] || {
+            type,
+            title:`About “${phrase}”`,
+            tips:["If this is a judgment, define it and prove it.", "If this is too absolute, limit it."],
+            stems:["This suggests ______, though ______ also matters (SOURCE).", "This may be a strong option for ______, but it requires ______ (SOURCE)."]
+          };
+          setFeedback(data, phrase, type);
+        };
+        el.addEventListener("click", activate);
+        el.addEventListener("keydown", event => {
+          if(event.key === "Enter" || event.key === " "){
+            event.preventDefault();
+            activate();
+          }
+        });
+      });
+    }
+
+    function renderPractice(){
+      practiceList.innerHTML = "";
+      practiceItems.forEach((item, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "practice-item";
+        wrapper.innerHTML = `
+          <p><strong>${index + 1}.</strong> ${escapeHtml(item.text)}</p>
+          <div class="practice-controls">
+            <label class="tag" for="practice-${index}">Choose A, B, or C</label>
+            <select id="practice-${index}" data-practice="${index}">
+              <option value="">Choose one</option>
+              <option value="A">A: defensible</option>
+              <option value="B">B: fact to verdict</option>
+              <option value="C">C: overclaim</option>
+            </select>
+            <span class="result-text" id="result-${index}" aria-live="polite"></span>
+          </div>
+        `;
+        practiceList.appendChild(wrapper);
+      });
+
+      document.querySelectorAll("[data-practice]").forEach(select => {
+        const index = Number(select.getAttribute("data-practice"));
+        const result = document.getElementById(`result-${index}`);
+        const saved = localStorage.getItem(STORAGE_PREFIX + `practice-${index}`);
+        if(saved){select.value = saved; updatePracticeResult(select, result, practiceItems[index].key)}
+        select.addEventListener("change", () => {
+          localStorage.setItem(STORAGE_PREFIX + `practice-${index}`, select.value);
+          updatePracticeResult(select, result, practiceItems[index].key);
+          markSaved();
+        });
+      });
+    }
+
+    function updatePracticeResult(select, result, key){
+      if(!select.value){
+        result.textContent = "";
+        result.classList.remove("wrong");
+        return;
+      }
+      if(select.value === key){
+        result.textContent = "Correct";
+        result.classList.remove("wrong");
+      } else {
+        result.textContent = "Not quite. Try again.";
+        result.classList.add("wrong");
+      }
+    }
+
+    function markSaved(){
+      if(!saveStatus) return;
+      saveStatus.textContent = "Saved in this browser.";
+      window.clearTimeout(markSaved.timer);
+      markSaved.timer = window.setTimeout(() => {
+        saveStatus.textContent = "";
+      }, 1800);
+    }
+
+    function initAutosave(){
+      document.querySelectorAll("[data-save]").forEach(field => {
+        const key = STORAGE_PREFIX + field.id;
+        const saved = localStorage.getItem(key);
+        if(saved !== null) field.value = saved;
+        field.addEventListener("input", () => {
+          localStorage.setItem(key, field.value);
+          markSaved();
+        });
+      });
+
+      document.querySelectorAll("[data-save-check]").forEach(box => {
+        const key = STORAGE_PREFIX + box.getAttribute("data-save-check");
+        const saved = localStorage.getItem(key);
+        if(saved !== null) box.checked = saved === "true";
+        box.addEventListener("change", () => {
+          localStorage.setItem(key, String(box.checked));
+          markSaved();
+        });
+      });
+    }
+
+    function autofillDate(){
+      const dateInput = document.getElementById("studentDate");
+      if(dateInput && !dateInput.value){
+        const d = new Date();
+        dateInput.value = d.toLocaleDateString(undefined, {year:"numeric", month:"long", day:"numeric"});
+        localStorage.setItem(STORAGE_PREFIX + "studentDate", dateInput.value);
+      }
+    }
+
+
+
+    function getLabelText(field){
+      if(!field.id) return "Response";
+      const label = document.querySelector(`label[for="${field.id}"]`);
+      return label ? label.textContent.trim() : field.id;
+    }
+
+    function updatePrintMirrors(){
+      document.querySelectorAll("[data-save]").forEach(field => {
+        let mirror = document.getElementById(field.id + "-print-value");
+        if(!mirror){
+          mirror = document.createElement("div");
+          mirror.className = "print-value";
+          mirror.id = field.id + "-print-value";
+          field.insertAdjacentElement("afterend", mirror);
+        }
+        mirror.textContent = field.value || "";
+      });
+
+      document.querySelectorAll("[data-practice]").forEach(select => {
+        let mirror = document.getElementById(select.id + "-print-value");
+        if(!mirror){
+          mirror = document.createElement("div");
+          mirror.className = "print-value";
+          mirror.id = select.id + "-print-value";
+          select.insertAdjacentElement("afterend", mirror);
+        }
+        const index = Number(select.getAttribute("data-practice"));
+        const choice = select.value || "Not answered";
+        const key = practiceItems[index].key;
+        mirror.textContent = choice === "Not answered" ? choice : `Student answer: ${choice} (${choice === key ? "correct" : "not correct"})`;
+      });
+    }
+
+    function collectStudentWork(){
+      const lines = [];
+      lines.push("Objective Voice Toolkit: Defensible Claims");
+      lines.push("Student work copied from toolkit workpage");
+      lines.push("");
+
+      document.querySelectorAll("[data-save]").forEach(field => {
+        lines.push(getLabelText(field));
+        lines.push(field.value || "[not answered]");
+        lines.push("");
+      });
+
+      lines.push("Practice set answers");
+      practiceItems.forEach((item, index) => {
+        const select = document.querySelector(`[data-practice="${index}"]`);
+        const choice = select && select.value ? select.value : "[not answered]";
+        lines.push(`${index + 1}. ${item.text}`);
+        lines.push(`Student answer: ${choice}`);
+        lines.push("");
+      });
+
+      lines.push("Self-check");
+      document.querySelectorAll("[data-save-check]").forEach(box => {
+        const text = box.closest("label")?.innerText.trim() || box.getAttribute("data-save-check");
+        lines.push(`${box.checked ? "[x]" : "[ ]"} ${text}`);
+      });
+
+      return lines.join("\n");
+    }
+
+    async function copyUnfinishedWork(){
+      updatePrintMirrors();
+      const text = collectStudentWork();
+      try{
+        await navigator.clipboard.writeText(text);
+      } catch(error){
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        temp.setAttribute("readonly", "");
+        temp.style.position = "fixed";
+        temp.style.left = "-9999px";
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+      }
+      if(saveModal) saveModal.classList.add("show");
+    }
+
+    function closeSaveModal(){
+      if(saveModal) saveModal.classList.remove("show");
+    }
+
+    function restoreSavedWork(){
+      initAutosave();
+      renderPractice();
+      updatePrintMirrors();
+      if(saveStatus) saveStatus.textContent = "Saved work restored from this browser.";
+    }
+
+    function bindPageTools(){
+      ["saveUnfinishedTop", "saveUnfinishedBottom"].forEach(id => {
+        const btn = document.getElementById(id);
+        if(btn) btn.addEventListener("click", copyUnfinishedWork);
+      });
+      ["restoreSavedTop"].forEach(id => {
+        const btn = document.getElementById(id);
+        if(btn) btn.addEventListener("click", restoreSavedWork);
+      });
+      const stay = document.getElementById("stayOnPage");
+      if(stay) stay.addEventListener("click", closeSaveModal);
+      if(saveModal){
+        saveModal.addEventListener("click", event => {
+          if(event.target === saveModal) closeSaveModal();
+        });
+      }
+      window.addEventListener("beforeprint", updatePrintMirrors);
+      document.querySelectorAll("input, textarea, select").forEach(field => {
+        field.addEventListener("input", updatePrintMirrors);
+        field.addEventListener("change", updatePrintMirrors);
+      });
+    }
+
+    document.getElementById("btnHighlight").addEventListener("click", highlightParagraph);
+    document.getElementById("btnReset").addEventListener("click", resetParagraph);
+
+    resetParagraph();
+    renderPractice();
+    initAutosave();
+    bindPageTools();
+    updatePrintMirrors();
+  </script>
+</body>
+</html>
